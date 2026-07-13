@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RE_CommandCenter (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "RE_CommandCenter (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,72 @@
+version: 1
+
+# Branch Table cua RE Command Center.
+# Tu Block 3.2, /route se goi static.triage truoc roi dua triage facts vao bang nay.
+# Route planned co the match, nhung app se bao tool chua duoc lap thay vi goi that.
+routes:
+  - id: "planned_unity_il2cpp"
+    enabled: false
+    planned: true
+    priority: 100
+    match_kind: "file"
+    require_exists: true
+    match_engine: "unity_il2cpp"
+    pipeline: "engine.unity_il2cpp"
+    tool_id: "engine.il2cpp"
+    tool_name: "dump_metadata"
+    argument_path: "$input.path"
+
+  - id: "planned_packed_windows_pe"
+    enabled: false
+    planned: true
+    priority: 90
+    match_kind: "file"
+    require_exists: true
+    match_file_type: "pe"
+    match_platform: "windows"
+    match_packer: "suspicious_high_entropy"
+    pipeline: "windows.packed_pe"
+    tool_id: "memory.memprocfs"
+    tool_name: "dump_process"
+    argument_path: "$input.path"
+
+  - id: "planned_clean_windows_pe"
+    enabled: false
+    planned: true
+    priority: 80
+    match_kind: "file"
+    require_exists: true
+    match_file_type: "pe"
+    match_platform: "windows"
+    match_recommended_pipeline: "windows.clean_pe"
+    pipeline: "windows.clean_pe"
+    tool_id: "decompiler.ghidra"
+    tool_name: "decompile_binary"
+    argument_path: "$input.path"
+
+  - id: "planned_android_apk"
+    enabled: false
+    planned: true
+    priority: 80
+    match_kind: "file"
+    require_exists: true
+    match_file_type: "apk"
+    match_platform: "android"
+    pipeline: "android.apk_static"
+    tool_id: "decompiler.jadx"
+    tool_name: "decompile_apk"
+    argument_path: "$input.path"
+
+  - id: "fingerprint_any_file"
+    enabled: true
+    planned: false
+    priority: 10
+    match_kind: "file"
+    require_exists: true
+    pipeline: "triage.fingerprint"
+    tool_id: "static.md5"
+    tool_name: "md5_file"
+    argument_path: "$input.path"
+
+fallback:
+  mode: "ask_ai_later"

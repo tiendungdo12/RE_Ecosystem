@@ -1,0 +1,3 @@
+FROM "D:\RE_Ecosystem\Shared_Models\lmstudio-community\LFM2.5-1.2B-Instruct-GGUF\LFM2.5-1.2B-Instruct-Q8_0.gguf"
+PARAMETER num_ctx 8192
+PARAMETER num_gpu 99

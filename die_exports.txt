@@ -1,0 +1,98 @@
+================================================================================
+DIE (Detect It Easy) C-ABI Exports Reference
+Generated for: die_core.dll (Detect It Easy Library)
+================================================================================
+
+This file contains the core exported functions from `die_core.dll` that are
+used to integrate the DIE engine into external applications (like C# or Python).
+
+Raw dumpbin /EXPORTS output (Filtered for main C-ABI):
+--------------------------------------------------------------------------------
+    ordinal hint RVA      name
+          1    0 0001A2B0 DIE_FreeMemoryA
+          2    1 0001A2D0 DIE_FreeMemoryW
+          3    2 0001A390 DIE_LoadDatabaseA
+          4    3 0001A4A0 DIE_LoadDatabaseW
+          5    4 0001A630 DIE_ScanFileA
+          6    5 0001A7E0 DIE_ScanFileW
+          7    6 0001A990 DIE_ScanMemoryA
+          8    7 0001AB80 DIE_ScanMemoryW
+--------------------------------------------------------------------------------
+
+Detailed C-ABI Signatures & Usage Guide
+================================================================================
+
+1. DIE_LoadDatabaseA
+--------------------------------------------------------------------------------
+Signature (C/C++):
+    int DIE_LoadDatabaseA(const char* pszDatabasePath);
+
+Description:
+    Loads the signature database (.sg files) into memory. This must be called 
+    AT LEAST ONCE before performing any file or memory scans. If you don't load 
+    the database, all scans will return "Unknown".
+    
+C# P/Invoke:
+    [DllImport("die_core.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern int DIE_LoadDatabaseA(string databasePath);
+
+
+2. DIE_ScanFileA
+--------------------------------------------------------------------------------
+Signature (C/C++):
+    char* DIE_ScanFileA(const char* pszFileName, unsigned int nFlags, const char* pszDatabasePath);
+
+Description:
+    Scans a file located at `pszFileName` using the signatures loaded from 
+    `pszDatabasePath`. The `nFlags` argument allows passing specific scanning 
+    modes (usually 0 for default mode, which returns JSON or plain text depending
+    on how the library was compiled).
+    Returns a pointer to a dynamically allocated C-string containing the results.
+
+C# P/Invoke:
+    [DllImport("die_core.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    public static extern IntPtr DIE_ScanFileA(string fileName, uint flags, string databasePath);
+
+
+3. DIE_FreeMemoryA
+--------------------------------------------------------------------------------
+Signature (C/C++):
+    void DIE_FreeMemoryA(char* pszMemory);
+
+Description:
+    CRITICAL: Frees the memory allocated by `DIE_ScanFileA` or `DIE_ScanMemoryA`.
+    Because the DLL allocates the result string using its own C-Runtime (CRT), 
+    the caller MUST pass the pointer back to the DLL to be freed. Failing to 
+    call this function will result in a severe memory leak.
+
+C# P/Invoke:
+    [DllImport("die_core.dll", CallingConvention = CallingConvention.Cdecl)]
+    public static extern void DIE_FreeMemoryA(IntPtr ptr);
+
+
+Example C# Wrapper Implementation
+================================================================================
+public static string Scan(string filePath, string dieDbPath)
+{
+    // 1. Ensure DB is loaded once globally
+    if (!_databaseLoaded)
+    {
+        DIE_LoadDatabaseA(dieDbPath);
+        _databaseLoaded = true;
+    }
+
+    // 2. Scan file
+    IntPtr ptr = DIE_ScanFileA(filePath, 0, dieDbPath);
+    if (ptr == IntPtr.Zero) return null;
+
+    // 3. Read & Free Memory
+    try
+    {
+        return Marshal.PtrToStringAnsi(ptr);
+    }
+    finally
+    {
+        DIE_FreeMemoryA(ptr); // ALWAYS call this to prevent leaks
+    }
+}
+================================================================================
