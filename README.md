@@ -4,7 +4,7 @@
 
 RE_Ecosystem is a research and engineering project developing a platform for structured binary analysis, with deterministic tools providing the evidence and AI agents helping researchers investigate it.
 
-The project addresses a practical problem: reverse-engineering workflows span multiple analyzers, reports, scripts and agent conversations. Results can be difficult to compare, preserve and verify. RE_Ecosystem aims to make the investigation—not the chat session—the durable unit of work, with traceable artifacts, explicit analysis outcomes and findings that can be checked against their sources.
+The project addresses a practical problem: reverse-engineering workflows span multiple analyzers, reports, scripts and agent conversations. Results can be difficult to compare, preserve and verify. RE_Ecosystem aims to make the investigation-not the chat session-the durable unit of work, with traceable artifacts, explicit analysis outcomes and findings that can be checked against their sources.
 
 **Current stage:** developer prototype with an implemented deterministic triage baseline; the broader platform is under development. **Progress snapshot:** 14 October 2026.
 
@@ -34,8 +34,8 @@ The existing baseline supports the first stage of a larger investigation:
 
 1. **Inspect an artifact.** Calculate hashes and collect structural, signature and platform-specific signals using deterministic analyzers.
 2. **Record the outcome.** Preserve structured results, errors and reports so incomplete analysis remains visible.
-3. **Investigate evidence — planned.** Link artifacts, runs and findings through canonical records; give an agent relevant evidence rather than an unrestricted dump of tool output.
-4. **Verify conclusions — planned.** Check important findings against source evidence and retain a clear distinction between observations, hypotheses and verified results.
+3. **Investigate evidence - planned.** Link artifacts, runs and findings through canonical records; give an agent relevant evidence rather than an unrestricted dump of tool output.
+4. **Verify conclusions - planned.** Check important findings against source evidence and retain a clear distinction between observations, hypotheses and verified results.
 
 The research objective is to reduce repetitive analysis work while preserving the analyst's ability to reproduce and challenge a conclusion.
 
@@ -69,7 +69,7 @@ These are **TARGET interfaces**, not a claim of completed interoperability. Exte
 
 | Milestone | Planned delivery |
 |---|---|
-| **PRE-H0 — DONE in project tracking** | Deterministic triage baseline and regression coverage |
+| **PRE-H0 - DONE in project tracking** | Deterministic triage baseline and regression coverage |
 | **H0** | Canonical Project/Case/Artifact/Run/Evidence/Finding state, lifecycle and persistence |
 | **H1** | Evidence-linked deterministic findings, scorecard, verifier and SARIF |
 | **H2** | Core capability registry, backend policy/approval and bounded evidence context |
