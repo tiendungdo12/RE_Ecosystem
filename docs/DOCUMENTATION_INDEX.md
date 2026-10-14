@@ -1,6 +1,6 @@
 # Documentation Index
 
-> **Updated:** 13 October 2026. Inventory regenerated from the actual repository: **116 Markdown files**, **8 RE skills**, **40 milestone role prompts**. CURRENT source, TARGET design, source transcripts and historical research have distinct roles.
+> **Updated:** 14 October 2026. Inventory regenerated from the actual repository: **118 Markdown files**, **8 RE skills**, **40 milestone role prompts**. CURRENT source, TARGET design, source transcripts and historical research have distinct roles.
 
 ## Canonical documents
 
@@ -13,6 +13,7 @@
 | [Interoperability](INTEROPERABILITY.md) | H3 Platform host, Skills/client packages, optional H7 ACP |
 | [Security](SECURITY.md) | Core/backend authority for every consumer |
 | [CURRENT](CURRENT_STATE.md) | Source facts vs unimplemented TARGET |
+| [PRE-H0 validation](VALIDATION_PRE_H0.md) | Measured publication regression/build/UI evidence |
 | [Decision log / source chain](ARCHITECTURE_RESET.md) | Original vision and subsequent terminology correction |
 | [SRS](../SRS_Progress_Tracking.md) | Requirement IDs, scope and evidence-backed progress |
 | [AGENTS](../AGENTS.md) | Repository/WinUI rules and architecture ownership |
@@ -166,3 +167,5 @@ Skills guide repository work; they do not duplicate contract ownership or prove 
 | `model_loading_research.md` | Historical/research reference |
 | `research_report.md` | Historical/research reference |
 | `scripts/README.md` | Project/developer guide (CURRENT vs TARGET) |
+| `docs/VALIDATION_PRE_H0.md` | Measured publication validation |
+| `lib/notices/README.md` | Third-party deployment notices |

@@ -1,6 +1,6 @@
 # Current Implementation Snapshot
 
-> **Classification:** CURRENT source inspection and TARGET separation, 13 October 2026. PRE-H0 is DONE per user report; no fresh independent milestone PASS is claimed.
+> **Classification:** CURRENT source inspection and TARGET separation, 14 October 2026. PRE-H0 remains DONE per user report; fresh publication regression evidence is linked below, without claiming H0–H9 milestone acceptance.
 
 ## Component status
 
@@ -18,6 +18,14 @@ Logical Platform Core spans projects; it is not solely the assembly named `RE.Co
 Source has `ITriagePipeline.RunTriageAsync`, direct/native `TriageService`, subprocess analysis, cancellation/partial-failure handling, and tests including `PeTriage_CanonicalPath_SucceedsWithoutMcpOrLlm` and `AntiRegression_McpStaticTriageRoute_IsBlocked`. `TriageOrchestrator` is obsolete and delegates to the pipeline. These inspected facts support the reported baseline; they do not independently prove every prior review/test gate.
 
 `KnowledgeStore.ResolveDatabasePath()` uses solution-root `knowledge.db`; tables include `Projects`, `ChatSessions`, `ChatHistory`, `TriageHistory`. Canonical Case/Run/Evidence/Finding persistence and migration remain TARGET. `direct_triage.py` is used as a direct subprocess runner; legacy MCP reference code does not turn triage into an agent loop.
+
+## Publication safeguards and measured checks
+
+- `ISecretStore` and Windows `DpapiSecretStore` protect API credentials with CurrentUser DPAPI. `UserSettingsStore` serializes atomic preference writes and migrates plaintext key fields into references. The WinUI settings service uses per-user storage and reports errors without a plaintext fallback.
+- `PreH0ToolPolicy` denies unknown/active calls before execution. Manager, executor and legacy transport apply it; raw client creation is internal, and `/md5` uses the guarded manager. This temporary read-only baseline does not implement scope-bound approvals, audit Evidence or the full H2 registry.
+- Default settings path is `%LOCALAPPDATA%/RE_Ecosystem/Settings/`. The explicit developer/test `RE_ECOSYSTEM_USER_DATA_ROOT` isolates settings and legacy DB; the default root database/history are unchanged.
+- `scripts/Setup-Runtime.ps1` provisions hash-locked Windows x64 CPython/wheels and a pinned DIE database. Repeated setup and bad-hash rejection were checked. Native source refs are supplied, not independently rebuilt.
+- [Publication validation](VALIDATION_PRE_H0.md): 85 .NET tests, 56 Python probes, four isolated local UI assertions, WinUI x64 and SecondUI builds. Clean-candidate checks used published payload and a newly provisioned runtime. Warnings remain; no AOT, full accessibility or H3 acceptance is claimed.
 
 ## Gaps
 

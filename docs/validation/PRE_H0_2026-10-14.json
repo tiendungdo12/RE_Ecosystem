@@ -22,20 +22,20 @@
   "python_script_completed": true,
   "ui_checks": [
     {
-      "name": "Dynamic chat title",
-      "status": "PASS"
+      "status": "PASS",
+      "name": "Dynamic chat title"
     },
     {
-      "name": "Preferences survive restart",
-      "status": "PASS"
+      "status": "PASS",
+      "name": "Preferences survive restart"
     },
     {
-      "name": "API key stored outside JSON",
-      "status": "PASS"
+      "status": "PASS",
+      "name": "API key stored outside JSON"
     },
     {
-      "name": "API key deletion and unchanged source",
-      "status": "PASS"
+      "status": "PASS",
+      "name": "API key deletion and unchanged source"
     }
   ],
   "bootstrap": {
@@ -58,5 +58,6 @@
     "Native source refs are supplied, not independently rebuilt",
     "Windows Sandbox unavailable; UI ran locally with isolated synthetic data",
     "Warnings remain and no Release/AOT/high-contrast acceptance is claimed"
-  ]
+  ],
+  "code_commit": "038d4dcc3140858a68c28633cdaee7ee0c198d6d"
 }

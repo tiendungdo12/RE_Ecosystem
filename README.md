@@ -24,7 +24,9 @@ The repository contains a C#/.NET implementation, a Windows desktop interface, P
 
 Available analysis depends on the selected native libraries, Python dependencies and input format. A triage score is a heuristic signal for investigation, not a verified malware verdict.
 
-Test code is present; this overview does not claim a fresh test pass, complete platform acceptance or measured performance gains. The detailed [implementation snapshot](docs/CURRENT_STATE.md) separates inspected source from planned functionality.
+On 14 October 2026, the publication snapshot passed **85 .NET tests (67 PRE-H0 regressions plus 18 publication-safety cases), 56 Python regression probes and four isolated UI checks**. A clean candidate with bootstrapped dependencies also built successfully. These results are scoped to Windows x64 and are not full platform acceptance or measured productivity gains; see [validation evidence](docs/VALIDATION_PRE_H0.md) and the [implementation snapshot](docs/CURRENT_STATE.md).
+
+Current publication safeguards include per-user settings with DPAPI-protected credential references and a fail-closed allowlist for reviewed read-only MCP calls. Active and unknown tools are blocked; scope-bound approval and the full H2/H8 policy services remain planned. Existing Antigravity private-provider bridge code is experimental and is not required for deterministic triage.
 
 ## Research workflow
 
@@ -109,14 +111,21 @@ The desired collaboration is feedback on agent/tool boundaries, evaluation desig
 
 The current solution uses **C#/.NET 10**, **WinUI 3 / Windows App SDK**, **Python**, **SQLite** and native analysis adapters. Desktop development requires Windows and the appropriate toolchain. See [Prerequisites](Prerequisites.md) before building; analysis components also require their native/Python dependencies.
 
+The published native payload and Python lock are for **Windows x64**. Bootstrap downloads hash-checked CPython 3.11.9, exact wheel versions and a pinned DIE signature database without rebuilding Qt/native libraries. Only reviewed deployment files are included; [artifact hashes and provenance](lib/artifacts.json) and [third-party notices](lib/notices/README.md) distinguish measured hashes from supplied native source refs.
+
 After configuring those prerequisites, the repository entry points are:
 
 ```powershell
 git clone https://github.com/tiendungdo12/RE_Ecosystem.git
 cd RE_Ecosystem
+pwsh -NoProfile -File scripts/Setup-Runtime.ps1
 dotnet restore RE_Ecosystem.slnx
 dotnet build RE.WinUI/RE.WinUI.csproj -p:Platform=x64 -r win-x64
 ```
+
+Regression checks: `dotnet test App_Test/App_Test.csproj` and `.\Python_Runtime\python.exe mcp_server/test_triage.py`. Optional UI verification: `pwsh -NoProfile -File scripts/Verify-Publication-UI.ps1`; it launches a local instance with isolated synthetic data.
+
+Settings are stored under `%LOCALAPPDATA%/RE_Ecosystem/Settings/`; API keys are DPAPI-protected files referenced by metadata. Legacy project/chat/triage history remains in the ignored root `knowledge.db`. The explicit developer variable `RE_ECOSYSTEM_USER_DATA_ROOT` redirects settings and the legacy database to an isolated directory without relocating normal user data.
 
 The existing Python subprocess runner can be exercised separately:
 
