@@ -1,0 +1,8 @@
+{
+  "python_version": "3.11.9",
+  "python_url": "https://www.python.org/ftp/python/3.11.9/python-3.11.9-embed-amd64.zip",
+  "die_database_commit": "d489b081e0fe93d42475703e5978e5ea353ad27b",
+  "die_database_url": "https://github.com/horsicq/Detect-It-Easy/archive/d489b081e0fe93d42475703e5978e5ea353ad27b.zip",
+  "python_sha256": "009d6bf7e3b2ddca3d784fa09f90fe54336d5b60f0e0f305c37f400bf83cfd3b",
+  "die_database_sha256": "fe5c56d95b06474d6a1a240a0ac62969607b3ab5bbe1fddf1fededf3f21cdfa9"
+}

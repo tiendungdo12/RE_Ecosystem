@@ -1,1 +1,44 @@
-mcp[cli]<2
+# Core RE Tools
+lief>=1.0.0
+yara-python>=4.5.4
+
+# MCP Server Framework (Stable)
+fastmcp>=4.0.11
+mcp[cli]>=2.3.0
+
+# Web Framework & ASGI
+starlette>=1.7.0
+uvicorn>=0.54.0
+websockets>=17.2
+
+# Data Validation
+pydantic>=2.5.0
+pydantic-settings>=2.15.0
+
+# Security
+cryptography>=50.0.2
+
+# HTTP Client
+httpx2>=2.13.1
+
+# CLI & Utilities
+click>=8.5.0
+rich>=15.0.0
+python-dotenv>=1.2.4
+
+# Telemetry
+opentelemetry-api>=1.45.0
+
+# SSE Support
+sse-starlette>=3.5.0
+
+# File Watcher
+watchfiles>=1.3.0
+
+# JSON Schema
+jsonschema>=4.26.0
+
+# Other Dependencies
+anyio>=4.15.1
+typing_extensions>=4.16.0
+packaging>=26.3

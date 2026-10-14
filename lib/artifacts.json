@@ -1,0 +1,737 @@
+{
+  "classification": "MEASURED file hashes; supplied native build refs are not independently verified",
+  "artifacts": [
+    {
+      "path": "lib/binwalk_core.dll",
+      "bytes": 1924608,
+      "sha256": "3d980bcdd4672387bc6fa08c3c97adb2f1bda316dfca170ddba0dadcaaf3a4a4",
+      "publication": "included",
+      "source": "https://github.com/ReFirmLabs/binwalk",
+      "source_ref": "26713972e3f9f52dc37d4a421c4554b0bd9e82ef",
+      "provenance_status": "supplied commit ref; not independently rebuilt",
+      "version": "unversioned DLL; supplied source ref",
+      "license": "MIT (upstream notices)"
+    },
+    {
+      "path": "lib/d3dcompiler_47.dll",
+      "bytes": 4753904,
+      "sha256": "3e56c1a0867aa04cbca948b3664fcac5d51275865cd044a45a3fd6ce636ee914",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/die_core.dll",
+      "bytes": 3538432,
+      "sha256": "7f1f6672adda52270a553ca8e9e835b14d9ae7e8a53ecfdac610076ea22e0a19",
+      "publication": "included",
+      "source": "https://github.com/horsicq/die_library",
+      "source_ref": "03e73c1134a6fef414b43fc61316f77f1ebb0b3f",
+      "provenance_status": "supplied commit ref; not independently rebuilt",
+      "version": "unversioned DLL; supplied source ref",
+      "license": "MIT (upstream notices)"
+    },
+    {
+      "path": "lib/dxcompiler.dll",
+      "bytes": 14261192,
+      "sha256": "329d7f39817a5831bbcb211b33e95437c1166f07f0ac7d646daee958d33e1137",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/dxil.dll",
+      "bytes": 1503688,
+      "sha256": "b377714bf34d18050dc4e39c5dded120f8cdfbd1558612aa60f0f2aa4f72f1a8",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/generic/qtuiotouchplugin.dll",
+      "bytes": 101176,
+      "sha256": "0a517e732bd6a12889e0708d6c464db1c07cfad9bb80831815d85505378d54ba",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/iconengines/qsvgicon.dll",
+      "bytes": 72504,
+      "sha256": "dcfe12e028e1fd694a99fbc18f6aebf08d36223f5fd99c1bc1e7bc85eee11281",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/imageformats/qgif.dll",
+      "bytes": 47928,
+      "sha256": "1ac71f48e08ee0aa405d55041f8340d56ed827fb94260bceda46ac0a50dfb7a5",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/imageformats/qico.dll",
+      "bytes": 45880,
+      "sha256": "0eb08bc9d8f6c1ab05f3a837629eb10e41eb6aa72240d23e291056b801894794",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/imageformats/qjpeg.dll",
+      "bytes": 577848,
+      "sha256": "bc3815c58443a01f43417ecac74bbf182c245d433ea82af0b3dc669c2cb064ab",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/imageformats/qsvg.dll",
+      "bytes": 39224,
+      "sha256": "8a4db91d1cb7689554794e93a9b0811fdffecfa43fc8c703049092ca27097ab7",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/networkinformation/qnetworklistmanager.dll",
+      "bytes": 70968,
+      "sha256": "8de339b75f82efac6381ca01e3dd3482c500a9115c49b53fbccafe0d933eef64",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/opengl32sw.dll",
+      "bytes": 20639888,
+      "sha256": "b04de4541863bc7d8879040a78889c4849c1b1da2784c4630f734c146c2998ce",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/platforms/qwindows.dll",
+      "bytes": 1006904,
+      "sha256": "dd126e2a47f7f3d4a855981e9d4012076058b1440f6900b9a07aa950e4e4f20a",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_debugger.dll",
+      "bytes": 214840,
+      "sha256": "17313f0991073420753182a1085339f63b60869f0c365a1a5bcdfe9c8a54a56f",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_inspector.dll",
+      "bytes": 101176,
+      "sha256": "70dcbbd7bbd64273f2dc3fa034908acdbc9f1340d124cff6e7d017977ed063ce",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_local.dll",
+      "bytes": 39224,
+      "sha256": "f78d91ba50934cff33bd47cc01d8984692a66ffde90d2c5fc174f29f9a639c00",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_messages.dll",
+      "bytes": 35640,
+      "sha256": "d07f60c8649a542320aebe91c054d537dc5dcf27306f04c8a9485956dd4a6d3c",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_native.dll",
+      "bytes": 49464,
+      "sha256": "c2cf2c007dcc4059362ed1d2c35eaacfd2bce262d1a07fa7b1a80c972db74c5e",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_nativedebugger.dll",
+      "bytes": 73528,
+      "sha256": "3ff780a53a862fbe339567240a27f0a149522bad55b15f2ef8297363337acd13",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_preview.dll",
+      "bytes": 204088,
+      "sha256": "160b0d1151f0e0cf172eee5cd413bc9a607eb574380909a224412ebf31276277",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_profiler.dll",
+      "bytes": 119096,
+      "sha256": "a50796e851f8e208d01f4a45ed92e03b70e5c9781d7b3ab7700525b5256add33",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_quickeventreplay.dll",
+      "bytes": 44856,
+      "sha256": "22d76dbaeb61bb70088375fcb287de04e5a3082308ddff6b79740d4f6be96b68",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_quickprofiler.dll",
+      "bytes": 43832,
+      "sha256": "b877267f993a23108b576ae483637af32812c805af53c51ae617609d37bcd857",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_server.dll",
+      "bytes": 101176,
+      "sha256": "17f606f09f3ea7cd9d85ec0821a6ba10bfc4ff61d2c786c738256253851893c7",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/qmltooling/qmldbg_tcp.dll",
+      "bytes": 36152,
+      "sha256": "ccb5235b88b13328dd5047e46385046457b65ed00fb1f7f045585e047662e32e",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/Qt6Core.dll",
+      "bytes": 10480440,
+      "sha256": "fae4778a42e93adc82b831c879c886a05147e9cc26760808d21116be5547259b",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6Gui.dll",
+      "bytes": 9589560,
+      "sha256": "8fceee959a670372aaa5763287c2ef7924cd9ecdbe2c29cf4b6c12a63079c503",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6Network.dll",
+      "bytes": 1771320,
+      "sha256": "0232076731e386b6cc353bdf743d5fb17e95a3493c2d02afac984db87ed47b96",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6OpenGL.dll",
+      "bytes": 1977656,
+      "sha256": "487f5dc733294df5553008195e5f659be2cd45d034bd30755705589d8892149b",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6Qml.dll",
+      "bytes": 5380920,
+      "sha256": "62ff9b3b217b625886e5e9cd48fdb6fcb29d2e88aab260ad59bf91b404b32783",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6QmlMeta.dll",
+      "bytes": 160056,
+      "sha256": "f9767b60304b190aa27a7806f3c45669d33c119668c84f176afa33647a67a42f",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6QmlModels.dll",
+      "bytes": 997176,
+      "sha256": "a79352b8152b6cb124647483d4465c8109f8276a244e972c3b2e6b085052454c",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6QmlWorkerScript.dll",
+      "bytes": 80696,
+      "sha256": "aa1f786339f872d19e5993cc7a866246f1b87701985a8dfee4e10e132f8e0142",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6Quick.dll",
+      "bytes": 6593336,
+      "sha256": "689daa7b3a81e2a6e2b1494139f242798523f9e3b1948867a8b13365d91b3de4",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/Qt6Svg.dll",
+      "bytes": 642360,
+      "sha256": "a5866fa80cca10dd58e31f277b62f1a1060d3a495fabcea72e2f9ade0f9e45fe",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/tls/qcertonlybackend.dll",
+      "bytes": 103736,
+      "sha256": "c1fa08ef8f0ea33370ad8e1239d9147262b08d002edab4bc4e9812827381dbba",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/tls/qschannelbackend.dll",
+      "bytes": 263992,
+      "sha256": "b263e588f2a93955a3e42b2c0d893d203cbe5a0ac42d1af5840ddd3b9a16b183",
+      "publication": "included",
+      "source": "Qt SDK 6.11.1",
+      "source_ref": "manufacturer SPDX in lib/notices",
+      "provenance_status": "SHA256 matches installed vendor SDK; source refs in manufacturer SPDX",
+      "version": "6.11.1",
+      "license": "Qt LGPL/GPL alternatives and third-party licenses in manufacturer SPDX"
+    },
+    {
+      "path": "lib/translations/qt_ar.qm",
+      "bytes": 160604,
+      "sha256": "eb09d3211567f7a0419738a8b29c8f8dffd33a72cc7826f8a06b04dd63e7b80d",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_bg.qm",
+      "bytes": 236116,
+      "sha256": "3c466e21df3b04188c77b4712cc068fc1ed3fa4ae87c133c0848e91abdf7cf1f",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_ca.qm",
+      "bytes": 309012,
+      "sha256": "c25c0b5bea8ff6063994d6575aa99ff2b55a6c2d7647e3012ffa8d7671a176d5",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_cs.qm",
+      "bytes": 174701,
+      "sha256": "03028b42df5479270371e4c3bdc7df2f56cbbe6dda956a2864ac6f6415861fe8",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_da.qm",
+      "bytes": 251481,
+      "sha256": "7ae318be007b0525f3d34f019f81840b98c34fdbdd3660aaa59d3828bf733368",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_de.qm",
+      "bytes": 333471,
+      "sha256": "599f80b892b1732301133d9192ca3d449f32fce07b22801c1c201c60228060ee",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_en.qm",
+      "bytes": 33,
+      "sha256": "494ac9a2b2cb2fdeced353f4a9f898ed8dcf616e9bc667438c62681e3f7f79cf",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_es.qm",
+      "bytes": 225002,
+      "sha256": "661105be6e930ec3b8ee2ad11ce9644514d5ff41e4a11c4f0d97419ff148319b",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_fa.qm",
+      "bytes": 178019,
+      "sha256": "e3fb7456660442dd9907bd1776f7d21c33bc64a9645d64f5ce96d97e437150a6",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_fi.qm",
+      "bytes": 245716,
+      "sha256": "1592fe9d114d96bb15d43c42c8acb3ba7786bb698c3b51335964df153aff21a9",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_fr.qm",
+      "bytes": 213901,
+      "sha256": "6a2af2232299317a0559612b8326355272ae787c325eb1552742a3cfd43ee372",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_gd.qm",
+      "bytes": 189580,
+      "sha256": "63b439dd44139aa3aed54c2ebe03fa9bc77f22c14ed8fba8eff2608445bb233d",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_he.qm",
+      "bytes": 138690,
+      "sha256": "e1ebca16afe8994356f81ca007fbdb9ddf865842010fe908923d873b687cad3f",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_hr.qm",
+      "bytes": 210554,
+      "sha256": "789064113567808f2a968e2ba973349cb537250adc3cfc3b14a75e4c5c0b6952",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_hu.qm",
+      "bytes": 306227,
+      "sha256": "d5fee6e7e708956edd50e4eb7f252abf0d939724bb12e34346effc42416a4838",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_it.qm",
+      "bytes": 161133,
+      "sha256": "eddce0a4677b28c100d880bacd333846ce872b12ea9ff97384e4e21b658b3e93",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_ja.qm",
+      "bytes": 175181,
+      "sha256": "5ad12b2b8c520129fd81050636e597cf8a6c48b8b6c35b9a49aef0067762c805",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_ka.qm",
+      "bytes": 295955,
+      "sha256": "583fc623628e172adaf1f0da097b81373f281870d6acb1be35ff596f2c087aef",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_ko.qm",
+      "bytes": 207002,
+      "sha256": "4745455ef25561732ba5ef92ea429fb15cc374159b408713a8e7adee57eac313",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_lg.qm",
+      "bytes": 315764,
+      "sha256": "31c0cc4ce13b1d74fe0c19ed0b47638fb31e20c93ee08092533e884007aebfb5",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_lv.qm",
+      "bytes": 207499,
+      "sha256": "d87cb760d1864772e28190ba1539821eaa7963e18c6d021f43f2bb1f01ed9b9a",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_nl.qm",
+      "bytes": 277794,
+      "sha256": "2d46e62f973f786a4312dbebef7708df81bf710977ae7341b69880ca15a46a4c",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_nn.qm",
+      "bytes": 261835,
+      "sha256": "fdba48066c854a3be558f121f9da441d87b2eeeb87d43643da0a2512381c0e0a",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_pl.qm",
+      "bytes": 227101,
+      "sha256": "4ee1e943c6110db91e97e8be5280f0c8453e5567a29d301131ad7cb66ea093fd",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_pt_BR.qm",
+      "bytes": 415940,
+      "sha256": "9da2186587f5b8aad872bdbca4a0d4b72bb83dc869ef04e482b96002f0faaa91",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_ru.qm",
+      "bytes": 270851,
+      "sha256": "3806fe039e79ee19207e82816ac3e0db14f05e9da10f519f5019e9bd5c99c5d4",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_sk.qm",
+      "bytes": 174373,
+      "sha256": "b09b46ddccd6a321f5f4caa87be9477f6cecd9c5d4680f22e3815ccbb42715c6",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_sv.qm",
+      "bytes": 344503,
+      "sha256": "b8aaa8885a6a276d2351e417edb7578c49869b538587f434ff5946ae8df406a5",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_tr.qm",
+      "bytes": 343286,
+      "sha256": "e7c2f8aa9b69f6695dde6d8ed61e83c171f18bddc578d9ccbb588adb0e334563",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_uk.qm",
+      "bytes": 231553,
+      "sha256": "e1c0f6b9667e5d83f35b3eacc80294d3204561d609d4f01f8dfe1e50b1dcb6d2",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_zh_CN.qm",
+      "bytes": 210800,
+      "sha256": "4b6e3079994d5982799da59e37135353421cc8556e8df52d99b7c457e6c2153b",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/translations/qt_zh_TW.qm",
+      "bytes": 126796,
+      "sha256": "4e73b9103c0da6b81d31c7f3c3c564addd53b68c0690233c77d99725cfa7fddc",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    },
+    {
+      "path": "lib/vc_redist.x64.exe",
+      "bytes": 18731856,
+      "sha256": "843068991daaa1f73ad9f6239bce4d0f6a07a51f18c37ea2a867e9beca71295c",
+      "publication": "local-only",
+      "source": "not independently verified",
+      "source_ref": null,
+      "provenance_status": "unverified; excluded from Git",
+      "version": "unverified"
+    }
+  ]
+}

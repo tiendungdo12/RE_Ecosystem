@@ -1,7 +1,11 @@
+> [!CAUTION]
+> **HISTORICAL / RESEARCH — terminology clarification, 13 October 2026.** Earlier Harness/platform ownership and implementation/metric claims below are preserved research, not current contracts. [Canonical architecture](docs/ARCHITECTURE.md) assigns state/policy/evidence/persistence to RE Platform Core and reserves AI Harness for optional H7 RE Agent Runtime. The [following architecture conversation](docs/reference/ARCHITECTURE_TERMINOLOGY_CLARIFICATION.md) clarifies the source vision. Use [CURRENT](docs/CURRENT_STATE.md) for actual source status.
+
 # 🔬 Phân Tích Toàn Diện: Chiến Lược Tích Hợp Tool Hệ Sinh Thái RE
 
-> Cập nhật: 2026-07-08
-> Trạng thái: **ĐÃ DUYỆT** — Đây là tài liệu tham chiếu chính thức cho kiến trúc tích hợp tool.
+> Cập nhật: 2026-07-08 | Đánh dấu lại: 20/09/2026
+> **Trạng thái: HISTORICAL RESEARCH / SUPERSEDED.** Phần lớn ma trận phía dưới được viết cho app cũ và có tool/version/placement claims chưa kiểm chứng. Chỉ dùng như nguồn ý tưởng, không làm contract, inventory source hiện tại, hay bằng chứng hiệu năng.
+> **Nguồn chuẩn hiện tại:** [`STRATEGY.md`](STRATEGY.md), [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/INTEROPERABILITY.md`](docs/INTEROPERABILITY.md) và source code. RE Core/Harness là platform; Command Center là tùy chọn. Deterministic triage chạy direct/native/subprocess.
 
 ---
 
@@ -11,36 +15,33 @@
 
 1. **Library-first:** Ưu tiên tích hợp dạng thư viện (import/P/Invoke). Chỉ dùng subprocess cho tool Java (bắt buộc).
 2. **Source-first:** Quản lý source code thay vì tải binary. Build trong pipeline cài đặt.
-3. **Một process Python duy nhất:** Gom tất cả tool Python vào 1 MCP server, chạy suốt phiên.
-4. **Giao tiếp đa ngôn ngữ qua C ABI:** C++, Rust đều expose `extern "C"` → C# gọi qua P/Invoke (~nano giây).
+3. **[LỊCH SỬ] Một process Python duy nhất:** Kiến trúc cũ gom tool Python vào một MCP server. Kiến trúc hiện tại chuyển **Phase 1 sang direct/native/subprocess không MCP**; MCP dành cho Agentic Lane/interoperability.
+4. **Giao tiếp đa ngôn ngữ qua C ABI:** C++, Rust đều expose `extern "C"` → C# gọi qua P/Invoke (overhead thấp; đo end-to-end bằng benchmark).
+5. **Mô hình Phân tích Lai (Hybrid Analysis):** Quy trình "Cơ bắp" (Unpacking, Dumping, Triage) do C# thiết lập quy tắc tĩnh (Deterministic) để đảm bảo không làm hỏng máy. Não bộ (Phân tích, rà soát mã giả, tra cứu web) được giao cho Cloud AI (hoặc Local AI) xử lý Agentic thông qua Function Calling/Tool Calling.
 
 ### Ma trận giao tiếp đa ngôn ngữ
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│                C# / WinUI 3 (.NET 10 Runtime)                │
-│                      App chính                                │
-├────────────┬────────────┬─────────────┬──────────────────────┤
-│  P/Invoke  │  P/Invoke  │  C# Direct  │  MCP stdio           │
-│  (C ABI)   │  (C ABI)   │  (cùng CLR) │  (JSON-RPC)          │
-├────────────┼────────────┼─────────────┼──────────────────────┤
-│ Windows    │ C/Rust DLL │ C# Library  │ Python    │ Java     │
-│ System DLL │ (Native)   │ (Project    │ (1 proc)  │ (1 proc) │
-│            │            │  Reference) │           │          │
-├────────────┼────────────┼─────────────┼───────────┼──────────┤
-│ wintrust   │ binwalk    │ Il2Cpp      │ lief      │ Ghidra   │
-│ .dll       │ _core.dll  │ Dumper      │ hashlib   │ JADX     │
-│            │ die_core   │ KsDumper    │ capstone  │          │
-│            │ .dll       │             │ frida     │          │
-│            │            │             │ qiling    │          │
-│            │            │             │ memprocfs │          │
-└────────────┴────────────┴─────────────┴───────────┴──────────┘
+┌───────────────────────────────────────────────────────────────────────────┐
+│                       C# / WinUI 3 (.NET 10 Runtime)                      │
+│                                 App chính                                 │
+├────────────┬────────────┬─────────────┬──────────────────────┬────────────┤
+│  P/Invoke  │  P/Invoke  │  C# Direct  │      MCP stdio       │  HTTP/SSE  │
+│  (C ABI)   │  (C ABI)   │  (cùng CLR) │      (JSON-RPC)      │   (REST)   │
+├────────────┼────────────┼─────────────┼───────────┬──────────┼────────────┤
+│ wintrust   │ binwalk    │ Hash (MD5/   │ lief      │ Ghidra   │ IDA Pro    │
+│ .dll       │ _core.dll  │ SHA1/SHA256) │ capstone  │ JADX     │ (Plugin)   │
+│            │ die_core   │ Dumper      │ frida     │ Burp     │            │
+│            │ .dll       │ KsDumper    │ qiling    │ Suite    │            │
+│            │            │             │ memprocfs │          │            │
+└────────────┴────────────┴─────────────┴───────────┴──────────┴────────────┘
 ```
 
 **Giải thích cơ chế:**
-- **P/Invoke (Platform Invocation):** C# gọi thẳng hàm C trong file `.dll`. Chi phí ~nano giây. C++/Rust cần thêm `extern "C"` để "giả dạng" thành C.
-- **C# Direct:** Tool viết bằng C# → thêm Project Reference → gọi trực tiếp class/method. 0ms overhead.
-- **MCP stdio:** C# spawn process → giao tiếp qua JSON-RPC trên stdin/stdout. Chi phí spawn 1 lần (~500ms), sau đó mỗi lệnh <10ms.
+- **P/Invoke (Platform Invocation):** C# gọi thẳng hàm C trong file `.dll`. Overhead thấp so với process/GUI boundary, nhưng không dùng “nano giây” làm KPI end-to-end. C++/Rust cần thêm `extern "C"` để "giả dạng" thành C.
+- **C# Direct:** Tool viết bằng C# → thêm Project Reference → gọi trực tiếp class/method. Không có process/serialization boundary; vẫn phải benchmark work thực tế.
+- **MCP stdio:** C# spawn process → giao tiếp qua JSON-RPC trên stdin/stdout. (Ghidra, JADX, Burp Suite, Unified Python).
+- **MCP HTTP/SSE:** Các phần mềm GUI khổng lồ (IDA) tự mở port nội bộ. App C# kết nối tới như một Client HTTP, không cần quản lý tiến trình.
 
 ---
 
@@ -59,23 +60,35 @@
 | **Cài đặt** | `pip install lief` |
 | **Cập nhật** | `pip install --upgrade lief` |
 
-> Đã tối ưu. LIEF cũng có sẵn API đọc chữ ký số PE (`binary.signatures`) — dùng làm backup cho Authenticode.
+> Đã tối ưu. LIEF được sử dụng làm công cụ chính trong file `server.py` để bóc tách cấu trúc file (PE, ELF, MachO). Phiên bản mới đã được lập trình để trích xuất IAT (Import Address Table) nhằm rà soát các hàm API đáng ngờ (vd: VirtualAlloc, LoadLibrary) và thu thập Export Tables để phân tích hành vi tiềm ẩn. LIEF cũng có sẵn API đọc chữ ký số PE (`binary.signatures`) — dùng làm backup cho Authenticode.
 
 ---
 
-#### 1.2 hashlib — Băm MD5 / SHA256
+#### 1.2 Hash (MD5 / SHA256)
 
 | Thuộc tính | Chi tiết |
 |---|---|
-| **Ngôn ngữ gốc** | C (OpenSSL core) + Python stdlib |
-| **Tích hợp** | ✅ Python stdlib |
-| **Cài đặt** | Có sẵn trong Python |
+| **Tích hợp** | ✅ Trực tiếp trong C# (.NET) |
+| **Thư viện** | `System.Security.Cryptography` |
+| **Cài đặt** | Có sẵn trong .NET Runtime (0ms overhead) |
 
-> Đã tối ưu. Lõi C native, tốc độ ngang tool hệ thống.
+> Đã tối ưu triệt để. C# gọi trực tiếp API hệ thống, không cần Python hay MCP.
 
 ---
 
-#### 1.3 Entropy Calculator — Tính mức hỗn loạn
+#### 1.3 Authenticode — Kiểm tra chữ ký số
+
+| Thuộc tính | Chi tiết |
+|---|---|
+| **Tích hợp** | ✅ P/Invoke Native C-ABI |
+| **Thư viện** | `wintrust.dll` (Có sẵn trong C:\Windows\System32) |
+| **Cài đặt** | Không cần cài đặt hay build |
+
+> Đã tối ưu triệt để. C# P/Invoke thẳng vào API Windows, loại bỏ hoàn toàn PowerShell. Giảm trễ ~500ms mỗi lần quét.
+
+---
+
+#### 1.4 Entropy Calculator — Tính mức hỗn loạn
 
 | Thuộc tính | Chi tiết |
 |---|---|
@@ -99,23 +112,10 @@
 | **Kiến trúc** | Phụ thuộc CLI cồng kềnh | Tích hợp trực tiếp vào lõi C# |
 | **Tốc độ** | ~200ms/lần (spawn process) | <5ms/lần (Native call) |
 
-**Lịch sử Quyết định:**
-Ban đầu, kế hoạch là thay thế DIE bằng `yara-python` để nhận diện packer. Tuy nhiên, YARA thiếu vắng các rule cập nhật về Compiler (MSVC, Borland) và khả năng nhận diện siêu sâu của DIE. Do đó, quyết định cuối cùng là **loại bỏ hoàn toàn YARA** và giữ lại DIE.
-Nhưng thay vì gọi `diec.exe` qua subprocess, chúng ta đã tận dụng thư viện `die_core.dll` được xuất ra dưới dạng C-ABI.
+**Cách triển khai (Chi tiết trong file scripts/dev/Build-Native-Deps.ps1):**
+Mã nguồn C++ (`die_library`) được tự động tải về và build thông qua CMake/Ninja, xuất ra thư viện `die_core.dll` dưới dạng C-ABI. App C# sau đó sử dụng P/Invoke để gọi thư viện này. Toàn bộ quá trình cài đặt, build và copy DLL được tự động hóa hoàn toàn trong script `scripts/dev/Build-Native-Deps.ps1`.
 
-**Cách triển khai (DieWrapper.cs):**
-```csharp
-[DllImport("die_core.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-public static extern int DIE_LoadDatabaseA(string databasePath);
-
-[DllImport("die_core.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-public static extern IntPtr DIE_ScanFileA(string fileName, uint flags, string databasePath);
-
-[DllImport("die_core.dll", CallingConvention = CallingConvention.Cdecl)]
-public static extern void DIE_FreeMemoryA(IntPtr ptr);
-```
-
-**Tác động:** Mang lại sức mạnh phân tích sâu nhất thế giới của DIE thẳng vào bộ nhớ của C# App mà không bị độ trễ spawn process, đồng thời loại bỏ sự phức tạp của việc duy trì tập luật YARA.
+**Tác động:** Mang lại sức mạnh phân tích sâu nhất thế giới của DIE thẳng vào bộ nhớ của C# App mà không bị độ trễ spawn process.
 
 ---
 
@@ -124,52 +124,11 @@ public static extern void DIE_FreeMemoryA(IntPtr ptr);
 | Thuộc tính | Hiện tại | Sau refactor |
 |---|---|---|
 | **Tích hợp** | ❌ subprocess `binwalk.exe` | ✅ P/Invoke `binwalk_core.dll` |
-| **Source** | Build exe từ crate | Clone source → thêm FFI → build DLL |
+| **Source** | Build exe từ crate | Tự động hóa hoàn toàn trong `scripts/dev/Build-Native-Deps.ps1` |
 | **Tốc độ** | ~100ms/lần (spawn process) | <1ms/lần (P/Invoke call) |
 
-**Cấu trúc thư mục:**
-```
-Tools/
-├── binwalk_src/                  ← Git clone từ ReFirmLabs/binwalk
-│   ├── src/
-│   │   ├── lib.rs                ← Logic gốc Binwalk (không sửa)
-│   │   └── ffi.rs                ← Lớp extern "C" wrapper (ta thêm vào)
-│   └── Cargo.toml                ← Thêm: crate-type = ["cdylib"]
-└── Native/
-    └── binwalk_core.dll          ← Output sau cargo build --release
-```
-
-**Lớp wrapper FFI mẫu (`ffi.rs`):**
-```rust
-use std::ffi::{CStr, CString};
-use std::os::raw::c_char;
-
-#[no_mangle]
-pub extern "C" fn binwalk_scan(path_ptr: *const c_char) -> *mut c_char {
-    let path = unsafe { CStr::from_ptr(path_ptr) }.to_str().unwrap();
-    let result = binwalk::scan(path);  // Gọi logic gốc
-    let json = serde_json::to_string(&result).unwrap();
-    CString::new(json).unwrap().into_raw()
-}
-
-#[no_mangle]
-pub extern "C" fn binwalk_free(ptr: *mut c_char) {
-    unsafe { drop(CString::from_raw(ptr)); }
-}
-```
-
-**C# gọi:**
-```csharp
-[DllImport("binwalk_core.dll", CallingConvention = CallingConvention.Cdecl)]
-static extern IntPtr binwalk_scan([MarshalAs(UnmanagedType.LPUTF8Str)] string path);
-
-[DllImport("binwalk_core.dll", CallingConvention = CallingConvention.Cdecl)]
-static extern void binwalk_free(IntPtr ptr);
-```
-
-**Quy trình build:**
-- **Lần cài đặt đầu tiên:** Clone source → `cargo build --release` → copy `.dll` vào `Tools/Native/`
-- **Khi cập nhật:** `git pull` source mới → `cargo build --release` → thay thế `.dll` cũ
+**Cách triển khai (Chi tiết trong file scripts/dev/Build-Native-Deps.ps1):**
+Mã nguồn Rust của Binwalk được tự động clone về. Script `scripts/dev/Build-Native-Deps.ps1` sẽ tự động tiêm (inject) lớp vỏ C-ABI (FFI code) vào mã nguồn gốc và gọi `cargo build --release --crate-type cdylib`. Tệp `binwalk_core.dll` sau đó được copy sang thư mục `Native/` để C# P/Invoke. Mọi mã nguồn Rust và C# liên quan đều đã được đóng gói hoặc sinh tự động, không cần thao tác thủ công.
 
 ---
 
@@ -183,23 +142,6 @@ static extern void binwalk_free(IntPtr ptr);
 **Tại sao không cần viết thêm C wrapper?**
 
 File `wintrust.dll` nằm trên mọi máy Windows (`C:\Windows\System32\wintrust.dll`) **chính là code C đã được Microsoft compile sẵn**. C# gọi thẳng vào đó qua P/Invoke — không có tầng trung gian nào cả.
-
-**Code C# gọi Windows API trực tiếp:**
-```csharp
-// Core/Security/AuthenticodeVerifier.cs
-[DllImport("wintrust.dll", SetLastError = true)]
-static extern int WinVerifyTrust(
-    IntPtr hwnd,
-    ref Guid pgActionID,
-    ref WINTRUST_DATA pWVTData);
-
-public static AuthenticodeResult Verify(string filePath)
-{
-    // Setup WINTRUST_DATA structure
-    // Gọi WinVerifyTrust
-    // Parse kết quả → trả về Status + Subject + Issuer
-}
-```
 
 **Tác động:** Loại bỏ hoàn toàn PowerShell khỏi pipeline. Giảm ~500ms mỗi lần quét.
 
@@ -234,13 +176,20 @@ public static AuthenticodeResult Verify(string filePath)
 | **Triton** | C++ core + Python bindings | ✅ `import triton` → Unified MCP Server |
 | **Z3 Prover** | C++ core + Python bindings | ✅ `import z3` → Unified MCP Server |
 
-#### Giai đoạn 8: Android Dynamic
+#### Giai đoạn 8: Android Dynamic & API/Network
 
 | Tool | Ngôn ngữ | Chiến lược tích hợp |
 |---|---|---|
 | **Frida** | C core + Python bindings | ✅ `import frida` → Unified MCP Server |
-| **JADX** | **Java** | MCP server long-running (spawn khi mở app) |
-| **Ghidra** | **Java** | MCP server long-running (spawn khi mở app, dùng ghidra-mcp) |
+| **JADX** | **Java** | MCP server stdio (spawn khi mở app) |
+| **Ghidra** | **Java** | MCP server stdio (spawn khi mở app) |
+| **Burp Suite** | **Java (GUI)** | ✅ Tích hợp qua `MCP HTTP/SSE` (Port 9876, tương tự IDA-MCP) |
+
+#### Giai đoạn 9: Advanced Disassembly (GUI)
+
+| Tool | Ngôn ngữ | Chiến lược tích hợp |
+|---|---|---|
+| **IDA Pro** | C++ / IDAPython | ✅ Cài Plugin `IDA-MCP`, tích hợp qua `MCP HTTP/SSE` (Port 11338) |
 
 ---
 
@@ -262,97 +211,66 @@ C# App
 ### Sau refactor (Tập trung — tối thiểu process)
 
 ```
-C# App
+C# App (Trưởng phòng)
   ├── [P/Invoke — không spawn process]
   │     ├── wintrust.dll (Authenticode)
   │     └── binwalk_core.dll (Deep scan)
   │
+  ├── [Middleware Lọc Dữ Liệu]
+  │     └── Presidio Anonymizer (Mask IP, Credentials, URL trước khi gửi lên AI)
+  │
+  ├── [Não bộ AI (Cloud/Local) via Function Calling]
+  │     ├── Đọc mã giả C++/Java đã làm sạch
+  │     └── Tự quyết định gọi các Tool dưới đây để làm rõ mã
+  │
   ├── [MCP Python — 1 process duy nhất, chạy suốt phiên]
   │     └── unified_server.py
-  │           ├── @tool triage_file()    ← lief + yara + hashlib
-  │           ├── @tool deep_analyze()   ← capstone + qiling
-  │           ├── @tool frida_hook()     ← frida
-  │           └── @tool memory_scan()    ← memprocfs
+  │           ├── @tool triage_file()              ← lief (Hỗ trợ bung .xapk/.apks)
+  │           ├── @tool deep_analyze()             ← capstone + qiling
+  │           ├── @tool frida_hook()               ← frida
+  │           ├── @tool memory_scan()              ← memprocfs
+  │           └── @tool search_web_for_re_context()← Trình tra cứu Web (API) cho AI
   │
   └── [MCP Java — 1 process, chạy khi mở app]
         ├── ghidra-mcp
         └── jadx-mcp
 ```
 
-**Kết quả:** Từ 5 process → 0 subprocess cho mỗi lần triage. Thời gian dự kiến giảm từ ~1.5s → <100ms.
+**Kết quả:** Từ 5 process → 0 subprocess cho mỗi lần triage. Thời gian dự kiến giảm từ ~1.5s → <100ms. Khả năng tự động hóa Agentic tăng vọt nhờ Tool Calling và Middleware Presidio đảm bảo 100% Privacy khi dùng Cloud AI.
 
 ---
 
 ## PHẦN D: QUY TRÌNH CÀI ĐẶT & CẬP NHẬT
 
-### Cài đặt lần đầu (`setup_tools.ps1`)
+*(Lưu ý: Toàn bộ mã nguồn cài đặt, vá lỗi, tiêm code FFI và build C++/Rust đều đã được tự động hóa hoàn toàn. Không cần ghi chép mã nguồn thủ công tại đây).*
 
-```powershell
-# 1. Python Virtual Environment
-python -m venv Tools/venv
-Tools/venv/Scripts/pip install lief yara-python mcp[cli]
+### Cài đặt lần đầu (`scripts/dev/Build-Native-Deps.ps1`)
+Chạy file script `scripts/dev/Build-Native-Deps.ps1` để tự động hóa 100% các bước:
+1. **Python Portable:** Tải tự động bản Embeddable 3.11, setup pip và cài `lief`, `mcp[cli]`.
+2. **Detect It Easy (C++):** Clone mã nguồn `die_library`, cấu hình CMake với MSVC/Ninja, build ra `die_core.dll` và deploy cùng Qt dependencies.
+3. **Binwalk v3 (Rust):** Clone mã nguồn, tự động tiêm (inject) lớp vỏ C-ABI (FFI code) vào `lib.rs`, chỉnh sửa `Cargo.toml` và chạy `cargo build` để xuất ra `binwalk_core.dll`.
+4. **Java Tools (Ghidra, JADX) & Burp Suite MCP:** Tải binary `.jar` cho Ghidra/JADX. Riêng **Burp Suite MCP**, tích hợp trực tiếp qua giao thức `HTTP/SSE` (mặc định mở tại port `9876` khi bật tab MCP trong Burp Suite Pro/Community), không cần copy hay phụ thuộc file jar proxy trung gian.
+5. **IDA-MCP Plugin:** Tự động clone mã nguồn `Captain-AI-Hub/IDA-MCP` vào `Tools/tmp_ida_mcp`. Người dùng sau đó chỉ cần chạy lệnh `python install.py` để script tự động dò tìm thư mục IDA Pro và chèn plugin vào đúng chỗ.
 
-# 2. YARA Rules
-git clone https://github.com/Neo23x0/signature-base Tools/Rules/signature-base
-git clone https://github.com/Yara-Rules/rules Tools/Rules/yara-rules
-
-# 3. Binwalk v3 (build DLL từ source)
-git clone https://github.com/ReFirmLabs/binwalk Tools/binwalk_src
-# Thêm ffi.rs + sửa Cargo.toml (tự động bằng script)
-cargo build --release --manifest-path Tools/binwalk_src/Cargo.toml
-Copy-Item Tools/binwalk_src/target/release/binwalk_core.dll Tools/Native/
-
-# 4. Java tools (tải binary — quá lớn để build from source)
-# Download ghidra-mcp.jar, jadx-cli.jar từ GitHub Releases
-```
-
-### Cập nhật (`update_tools.ps1`)
-
-**Quy tắc Cốt lõi: Xóa cũ - Cài mới.** Trước khi cập nhật bất kỳ tool nào, script phải dọn dẹp sạch sẽ thư mục/file cũ để tránh lỗi xung đột hoặc tốn dung lượng rác.
-
-```powershell
-# 1. Python packages
-Tools/venv/Scripts/pip install --upgrade lief yara-python
-
-# 2. YARA Rules
-git -C Tools/Rules/signature-base pull
-git -C Tools/Rules/yara-rules pull
-
-# 3. Binwalk v3 (rebuild DLL, thay thế cái cũ)
-git -C Tools/binwalk_src pull
-cargo build --release --manifest-path Tools/binwalk_src/Cargo.toml
-# XÓA FILE CŨ TRƯỚC KHI COPY MỚI
-Remove-Item Tools/Native/binwalk_core.dll -ErrorAction SilentlyContinue
-Copy-Item Tools/binwalk_src/target/release/binwalk_core.dll Tools/Native/
-
-# 4. Java tools (check GitHub API → tải nếu có version mới)
-# So sánh version hiện tại vs latest release
-# Nếu có bản mới: Xóa file .jar cũ -> Tải file .jar mới
-```
+### Cập nhật (`update_ecosystem.ps1`)
+**Quy tắc Cốt lõi: Xóa cũ - Cài mới.**
+- Script sẽ tự động gọi `git pull` lấy code mới nhất.
+- Thực hiện build lại DLL.
+- Bắt buộc xóa (`Remove-Item`) các file DLL cũ trong thư mục `Native/` trước khi copy file DLL mới vào để tránh lỗi xung đột bộ nhớ.
 
 ### Cấu trúc thư mục sau refactor
 
 ```
 Tools/
-├── venv/                         ← Python virtual environment
-├── Rules/                        ← YARA rules (git repos)
-│   ├── signature-base/           ← Neo23x0
-│   └── yara-rules/               ← Community
+├── Python_Runtime/               ← Bản Python 3.11 Portable (Không dùng venv)
 ├── binwalk_src/                  ← Binwalk v3 Rust source (git repo)
-│   ├── src/
-│   │   ├── lib.rs
-│   │   └── ffi.rs                ← Wrapper extern "C"
-│   └── Cargo.toml
-├── Native/                       ← Compiled DLLs
-│   └── binwalk_core.dll
-├── MCP_Unified/                  ← Unified Python MCP Server
-│   └── server.py                 ← Tất cả tool Python gom vào đây
-├── Java/                         ← Java MCP servers
-│   ├── ghidra-mcp.jar
-│   └── jadx-cli.jar
-├── setup_tools.ps1               ← Cài đặt lần đầu
-├── update_tools.ps1              ← Cập nhật
-└── requirements.txt              ← Pin version Python packages
+├── tmp_die_library/              ← DIE C++ source (git repo, sẽ bị xóa sau khi build)
+├── Native/                       ← Chứa các file DLL tự build (`binwalk_core.dll`, `die_core.dll`)
+├── MCP_Unified/                  ← Unified Python MCP Server (`server.py`)
+├── Java/                         ← Java MCP (`ghidra-mcp.jar`, `jadx-cli.jar`)
+├── tmp_ida_mcp/                  ← IDA-MCP source (Để chạy `install.py` cài plugin vào IDA)
+├── scripts/dev/Build-Native-Deps.ps1   ← Cài đặt lần đầu (Tự động tải mã nguồn, vá code, compile DLL)
+└── update_ecosystem.ps1          ← Cập nhật (Git pull -> Build -> Xóa cũ -> Copy mới)
 ```
 
 ---
@@ -380,5 +298,5 @@ Tools/
 | Tool | Lý do |
 |---|---|
 | LIEF (`import lief`) | Python library, lõi C++, đã tối ưu |
-| hashlib | Python stdlib, lõi OpenSSL C |
+| Hash (MD5, SHA1, SHA256) | C# `System.Security.Cryptography`, lõi Windows CNG |
 | Entropy | Hàm Python nội bộ, đủ nhanh |

@@ -1,0 +1,69 @@
+<Page
+    x:Class="RE.WinUI.Views.Settings.AppearanceSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d"
+    Background="Transparent"
+    SizeChanged="Page_SizeChanged">
+
+    <ScrollViewer>
+        <StackPanel x:Name="MainStackPanel" Spacing="4" HorizontalAlignment="Center" Padding="56,30,56,30">
+            <TextBlock x:Name="DetailTitle" x:Uid="AppearanceSettingsTitle" Text="Appearance"
+                       Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,16" />
+
+            <!-- App Theme -->
+            <controls:SettingsCard x:Name="ThemeCard" x:Uid="ThemeCard" Header="App Theme"
+                                   Description="Select app theme">
+                <controls:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE790;" />
+                </controls:SettingsCard.HeaderIcon>
+                <ComboBox x:Name="ThemeComboBox" Width="200" MinWidth="200"
+                          SelectionChanged="ThemeComboBox_SelectionChanged">
+                    <ComboBoxItem x:Uid="ThemeDefault" Content="System Default" Tag="Default" />
+                    <ComboBoxItem x:Uid="ThemeLight" Content="Light" Tag="Light" />
+                    <ComboBoxItem x:Uid="ThemeDark" Content="Dark" Tag="Dark" />
+                </ComboBox>
+            </controls:SettingsCard>
+
+            <!-- Backdrop Material -->
+            <controls:SettingsCard x:Name="BackdropCard" x:Uid="BackdropCard" Header="Window Material"
+                                   Description="Background Effect">
+                <controls:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE7B5;" />
+                </controls:SettingsCard.HeaderIcon>
+                <ComboBox x:Name="BackdropComboBox" Width="200" MinWidth="200"
+                          SelectionChanged="BackdropComboBox_SelectionChanged">
+                    <ComboBoxItem x:Uid="BackdropMica" Content="Mica (Windows 11)" Tag="Mica" />
+                    <ComboBoxItem x:Uid="BackdropMicaAlt" Content="Mica Alt" Tag="MicaAlt" />
+                    <ComboBoxItem x:Uid="BackdropAcrylic" Content="Acrylic" Tag="Acrylic" />
+                    <ComboBoxItem x:Uid="BackdropNone" Content="None" Tag="None" />
+                </ComboBox>
+            </controls:SettingsCard>
+
+            <!-- Accent Color -->
+            <controls:SettingsCard x:Name="AccentCard" x:Uid="AccentExpander" Header="Accent Color"
+                                   Description="System or custom accent color">
+                <controls:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE790;" />
+                </controls:SettingsCard.HeaderIcon>
+                <ToggleSwitch x:Name="SystemAccentToggle"
+                              OnContent="System" OffContent="Custom"
+                              Toggled="SystemAccentToggle_Toggled" />
+            </controls:SettingsCard>
+
+            <!-- Custom Color Picker Card -->
+            <controls:SettingsCard x:Name="CustomColorCard" x:Uid="CustomColorCard" Header="Custom Accent Color"
+                                   Visibility="Collapsed">
+                <ColorPicker x:Name="AccentColorPicker"
+                             ColorChanged="AccentColorPicker_ColorChanged"
+                             IsColorSliderVisible="True"
+                             IsColorChannelTextInputVisible="True"
+                             IsHexInputVisible="True"
+                             IsAlphaEnabled="False" />
+            </controls:SettingsCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

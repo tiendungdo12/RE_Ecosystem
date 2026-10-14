@@ -1,0 +1,710 @@
+<Page
+    x:Class="RE.WinUI.Views.TriagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:models="using:RE.Domain.Models"
+    xmlns:vm="using:RE.WinUI.ViewModels"
+    xmlns:views="using:RE.WinUI.Views"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <!-- This page accepts external file drops. -->
+    <Grid AllowDrop="True" DragOver="Page_DragOver" Drop="Page_Drop" Background="Transparent">
+        <ScrollViewer x:Name="RootScrollViewer" VerticalScrollBarVisibility="Auto" Background="Transparent"
+                      SizeChanged="RootScrollViewer_SizeChanged">
+            <!-- Main Container Grid -->
+            <Grid x:Name="MainContainerGrid" Margin="24" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Row 0: Header Section -->
+                <StackPanel Grid.Row="0" Spacing="8" Margin="0,0,0,16">
+                    <TextBlock x:Uid="TriageHeaderTitle" Text="Automated File Triage"
+                               Style="{StaticResource TitleTextBlockStyle}" FontFamily="Segoe UI Variable Display" />
+                    <TextBlock x:Uid="TriageHeaderSubtitle"
+                               Text="Select an executable or Android package to extract LIEF, DIE, Binwalk, Authenticode, and Risk heuristics."
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+
+                <!-- Row 1: Segmented Control Toolbar -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="12" Margin="0,0,0,24">
+                    <Button Command="{x:Bind ViewModel.ShowActiveAnalysisCommand}"
+                            Padding="16,8"
+                            Opacity="{x:Bind ViewModel.ActiveAnalysisOpacity, Mode=OneWay}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE81E;" FontSize="15" />
+                            <TextBlock x:Uid="TriageActiveAnalysisBtnText" Text="Active Analysis" FontWeight="SemiBold" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Command="{x:Bind ViewModel.ShowScanLibraryCommand}"
+                            Padding="16,8"
+                            Opacity="{x:Bind ViewModel.ScanLibraryOpacity, Mode=OneWay}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE8F1;" FontSize="15" />
+                            <TextBlock x:Uid="TriageScanLibraryBtnText" Text="Scan Library" FontWeight="SemiBold" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <!-- Row 2: Active Analysis Container -->
+                <StackPanel Grid.Row="2" Visibility="{x:Bind views:TriagePage.BoolToVisibility(ViewModel.IsActiveAnalysisVisible), Mode=OneWay}">
+                    <!-- Action Section -->
+                    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                            CornerRadius="8" Padding="16">
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="16"
+                                        VerticalAlignment="Center">
+                                <FontIcon Glyph="&#xE8E5;" FontSize="20" />
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock x:Uid="TriageTargetFileTitle" Text="Target File" />
+                                    <TextBlock x:Uid="TriageTargetFileSubtitle"
+                                               Text="Choose a local file to analyze (.exe, .dll, .apk, .xapk, .so)"
+                                               FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <TextBox Grid.Column="1" x:Uid="TriageFilePathInput" HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Center" PlaceholderText="C:\path\to\file.exe"
+                                     IsReadOnly="False"
+                                     Text="{x:Bind ViewModel.FilePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Grid.Column="2" x:Uid="TriageBrowseBtn" Content="Browse" VerticalAlignment="Center"
+                                    Command="{x:Bind ViewModel.BrowseCommand}" />
+                            <Button Grid.Column="3" x:Uid="TriageScanBtn" Content="Scan" VerticalAlignment="Center"
+                                    Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.ScanCommand}"
+                                    IsEnabled="{x:Bind views:TriagePage.InvertBool(ViewModel.IsScanning), Mode=OneWay}" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Scanning / Progress Indicator with Cancel Button -->
+                    <StackPanel Margin="0,12,0,0" Spacing="8" Visibility="{x:Bind views:TriagePage.BoolToVisibility(ViewModel.IsScanning), Mode=OneWay}">
+                        <ProgressBar IsIndeterminate="True" HorizontalAlignment="Stretch" />
+                        <Grid>
+                            <TextBlock Text="{x:Bind ViewModel.ScanStatusText, Mode=OneWay}" VerticalAlignment="Center"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontSize="12" />
+                            <Button Content="Hủy (Cancel)" HorizontalAlignment="Right" Command="{x:Bind ViewModel.CancelScanCommand}" />
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- Dashboard Section -->
+                    <Grid Margin="0,24,0,24">
+                        <StackPanel Spacing="16" Visibility="{x:Bind ViewModel.IsDashboardVisible, Mode=OneWay}">
+
+                            <!-- Row: Risk Score Banner / Executive Card -->
+                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                                    CornerRadius="8" Padding="20">
+                                <Grid ColumnSpacing="24">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Left: Score & Level -->
+                                    <StackPanel Grid.Column="0" Spacing="8" VerticalAlignment="Center" MinWidth="180">
+                                        <TextBlock Text="ĐÁNH GIÁ RỦI RO (RISK SCORE)" FontSize="11" FontWeight="Bold"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Bottom">
+                                            <TextBlock Text="{x:Bind ViewModel.RiskScore, Mode=OneWay}" FontSize="36"
+                                                       FontWeight="Bold" Foreground="{ThemeResource SystemAccentColor}" />
+                                            <TextBlock Text="/ 100" FontSize="16"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       Margin="0,0,0,6" VerticalAlignment="Bottom" />
+                                        </StackPanel>
+                                        <TextBlock Text="{x:Bind ViewModel.RiskLevelDisplayText, Mode=OneWay}"
+                                                   FontWeight="SemiBold" FontSize="15" />
+                                    </StackPanel>
+
+                                    <!-- Right: Risk Factors -->
+                                    <StackPanel Grid.Column="1" Spacing="6" VerticalAlignment="Center">
+                                        <TextBlock Text="Yếu tố rủi ro phát hiện:" FontSize="12" FontWeight="SemiBold"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <ItemsControl ItemsSource="{x:Bind ViewModel.RiskFactors, Mode=OneWay}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,2">
+                                                        <FontIcon Glyph="&#xE7BA;" FontSize="12"
+                                                                  Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                                  VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding}" FontSize="12" TextWrapping="Wrap"
+                                                                   Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        <TextBlock
+                                            Text="Không phát hiện yếu tố bất thường hoặc hành vi nguy hiểm rõ rệt."
+                                            FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Visibility="{x:Bind views:TriagePage.BoolToVisibility(ViewModel.HasNoRiskFactors), Mode=OneWay}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <Grid RowSpacing="16" ColumnSpacing="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Left Column (Row 0): Identity & Hashes -->
+                                <Border Grid.Row="0" Grid.Column="0"
+                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                                        CornerRadius="8" Padding="16" VerticalAlignment="Top">
+                                    <StackPanel Spacing="16">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <FontIcon Glyph="&#xE8C4;" Foreground="{ThemeResource SystemAccentColor}" />
+                                            <TextBlock x:Uid="TriageIdentityHashesTitle" Text="Identity &amp; Hashes"
+                                                       FontWeight="SemiBold" />
+                                        </StackPanel>
+
+                                        <Grid RowSpacing="8" ColumnSpacing="12">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Row="0" Grid.Column="0" x:Uid="TriageSizeLabel"
+                                                       Text="Size:"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Grid.Row="0" Grid.Column="1"
+                                                       Text="{x:Bind ViewModel.FileSize, Mode=OneWay}" />
+
+                                            <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="TriageMagicLabel"
+                                                       Text="Magic:"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Grid.Row="1" Grid.Column="1"
+                                                       Text="{x:Bind ViewModel.Magic, Mode=OneWay}" TextWrapping="Wrap" />
+
+                                            <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="TriagePlatformLabel"
+                                                       Text="Platform:"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Grid.Row="2" Grid.Column="1"
+                                                       Text="{x:Bind ViewModel.PlatformInfo, Mode=OneWay}" />
+
+                                            <TextBlock Grid.Row="3" Grid.Column="0" x:Uid="TriageMd5Label" Text="MD5:"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Grid.Row="3" Grid.Column="1"
+                                                       Text="{x:Bind ViewModel.Md5, Mode=OneWay}"
+                                                       IsTextSelectionEnabled="True" VerticalAlignment="Center" />
+
+                                            <TextBlock Grid.Row="4" Grid.Column="0" x:Uid="TriageSha256Label"
+                                                       Text="SHA-256:"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Grid.Row="4" Grid.Column="1"
+                                                       Text="{x:Bind ViewModel.Sha256, Mode=OneWay}"
+                                                       IsTextSelectionEnabled="True" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Right Column (Row 0): Security & Packers -->
+                                <Border Grid.Row="0" Grid.Column="1"
+                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                                        CornerRadius="8" Padding="16" VerticalAlignment="Top">
+                                    <StackPanel Spacing="16">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <FontIcon Glyph="&#xE72E;" Foreground="{ThemeResource SystemAccentColor}" />
+                                            <TextBlock x:Uid="TriageSecurityPackersTitle" Text="Security &amp; Packers"
+                                                       FontWeight="SemiBold" />
+                                        </StackPanel>
+
+                                        <Grid RowSpacing="12" ColumnSpacing="12">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Row="0" Grid.Column="0" x:Uid="TriageEntropyLabel"
+                                                       Text="Entropy:" VerticalAlignment="Center"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal"
+                                                        Spacing="8">
+                                                <TextBlock Text="{x:Bind ViewModel.Entropy, Mode=OneWay}"
+                                                           VerticalAlignment="Center" />
+                                                <Border
+                                                    Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                    CornerRadius="4" Padding="6,2"
+                                                    Visibility="{x:Bind ViewModel.IsHighEntropy, Mode=OneWay}">
+                                                    <TextBlock x:Uid="TriageHighPackedLabel"
+                                                               Text="High / Packed (>7.2)" FontSize="11"
+                                                               Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                               FontWeight="SemiBold" />
+                                                </Border>
+                                            </StackPanel>
+
+                                            <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="TriagePackerLabel"
+                                                       Text="Packer:"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <TextBlock Grid.Row="1" Grid.Column="1"
+                                                       Text="{x:Bind ViewModel.PackerInfo, Mode=OneWay}"
+                                                       FontWeight="SemiBold" />
+
+                                            <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="TriageAuthLabel"
+                                                       Text="Authenticode:"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <StackPanel Grid.Row="2" Grid.Column="1">
+                                                <TextBlock Text="{x:Bind ViewModel.AuthStatus, Mode=OneWay}" />
+                                                <TextBlock Text="{x:Bind ViewModel.AuthSubject, Mode=OneWay}"
+                                                           FontSize="12"
+                                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                           TextWrapping="Wrap" />
+                                            </StackPanel>
+
+                                            <TextBlock Grid.Row="3" Grid.Column="0" x:Uid="TriagePipelineLabel"
+                                                       Text="Pipeline:" VerticalAlignment="Center"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            <Border Grid.Row="3" Grid.Column="1"
+                                                    Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
+                                                    CornerRadius="4" Padding="8,4" HorizontalAlignment="Left">
+                                                <TextBlock Text="{x:Bind ViewModel.RecommendedPipeline, Mode=OneWay}"
+                                                           FontSize="12" FontWeight="SemiBold" />
+                                            </Border>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Bottom Row (Row 1, Spans 2 cols): Threat Matrix / Suspicious Imports & DIE -->
+                                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                                        CornerRadius="8" Padding="16">
+                                    <Grid ColumnSpacing="24">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Left: Threat Matrix / Categorized Imports -->
+                                        <StackPanel Grid.Column="0" Spacing="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <FontIcon Glyph="&#xE7BA;"
+                                                          Foreground="{ThemeResource SystemFillColorCautionBrush}" />
+                                                <TextBlock Text="Ma Trận Hành Vi &amp; API Nguy Hiểm"
+                                                           FontWeight="SemiBold" />
+                                                <TextBlock
+                                                    Text="{x:Bind ViewModel.SuspiciousImportsCount, Mode=OneWay}"
+                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            </StackPanel>
+
+                                            <!-- Grouped categories -->
+                                            <ItemsControl
+                                                ItemsSource="{x:Bind ViewModel.CategorizedImports, Mode=OneWay}"
+                                                Margin="0,4,0,16">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="vm:GroupedImportCategory">
+                                                        <StackPanel Spacing="4" Margin="0,4,0,8">
+                                                            <TextBlock Text="{x:Bind DisplayTitle}"
+                                                                       FontWeight="SemiBold" FontSize="12"
+                                                                       Foreground="{ThemeResource SystemFillColorCautionBrush}" />
+                                                            <ItemsControl ItemsSource="{x:Bind Apis}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding}"
+                                                                                FontFamily="Cascadia Mono, Consolas"
+                                                                                FontSize="11" Margin="12,1,0,1"
+                                                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                            <TextBlock Text="Không phát hiện API đáng ngờ trong IAT." FontSize="12"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       Visibility="{x:Bind views:TriagePage.BoolToVisibility(ViewModel.HasNoSuspiciousImports), Mode=OneWay}" />
+                                        </StackPanel>
+
+                                        <!-- Right: DIE Deep Analysis -->
+                                        <StackPanel Grid.Column="1" Spacing="8">
+                                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                                <FontIcon Glyph="&#xE90F;"
+                                                          Foreground="{ThemeResource SystemAccentColor}" />
+                                                <TextBlock x:Uid="TriageDieTitle" Text="Detect-It-Easy Signatures"
+                                                           FontWeight="SemiBold" />
+                                            </StackPanel>
+
+                                            <ItemsControl ItemsSource="{x:Bind ViewModel.DieDetails, Mode=OneWay}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnSpacing="8" Margin="0,4">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Text="{Binding Key}"
+                                                                       FontWeight="SemiBold" FontSize="12"
+                                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                            <TextBlock Grid.Column="1" Text="{Binding Value}"
+                                                                       FontSize="12" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+
+                            <!-- Android Package Profile (If Android File) -->
+                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                                    CornerRadius="8" Padding="16"
+                                    Visibility="{x:Bind views:TriagePage.BoolToVisibility(ViewModel.IsAndroidFile), Mode=OneWay}">
+                                <StackPanel Spacing="12">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <FontIcon Glyph="&#xE701;" Foreground="{ThemeResource SystemAccentColor}" />
+                                        <TextBlock Text="Android Package Profile" FontWeight="SemiBold" />
+                                    </StackPanel>
+
+                                    <Grid RowSpacing="8" ColumnSpacing="16">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="130" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="130" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Package Name:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                                   Text="{x:Bind ViewModel.AndroidPackageName, Mode=OneWay}"
+                                                   FontWeight="SemiBold" />
+
+                                        <TextBlock Grid.Row="0" Grid.Column="2" Text="Version:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="0" Grid.Column="3"
+                                                   Text="{x:Bind ViewModel.AndroidVersion, Mode=OneWay}" />
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Main Activity:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                                   Text="{x:Bind ViewModel.AndroidMainActivity, Mode=OneWay}" />
+
+                                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Engine:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="1" Grid.Column="3"
+                                                   Text="{x:Bind ViewModel.EngineInfo, Mode=OneWay}"
+                                                   FontWeight="SemiBold" />
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Native Architectures:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                                   Text="{x:Bind ViewModel.AndroidNativeArchs, Mode=OneWay}" />
+
+                                        <TextBlock Grid.Row="2" Grid.Column="2" Text="DEX Files:"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock Grid.Row="2" Grid.Column="3"
+                                                   Text="{x:Bind ViewModel.AndroidDexCount, Mode=OneWay}" />
+                                    </Grid>
+
+                                    <MenuFlyoutSeparator Margin="0,8" />
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="Dangerous &amp; Sensitive Permissions:" FontWeight="SemiBold"
+                                                   FontSize="12" />
+                                        <TextBlock Text="{x:Bind ViewModel.AndroidDangerousPermsCount, Mode=OneWay}"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   FontSize="12" />
+                                    </StackPanel>
+
+                                    <ListView ItemsSource="{x:Bind ViewModel.DangerousPermissions, Mode=OneWay}"
+                                              SelectionMode="None">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:AndroidDangerousPermission">
+                                                <Grid ColumnSpacing="12" Margin="0,2">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2.5*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="4*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{x:Bind Name}"
+                                                               FontFamily="Cascadia Mono, Consolas" FontSize="11"
+                                                               FontWeight="Medium" />
+                                                    <Border Grid.Column="1"
+                                                            Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
+                                                            CornerRadius="4" Padding="6,2" HorizontalAlignment="Left">
+                                                        <TextBlock Text="{x:Bind Risk}" FontSize="10" FontWeight="Bold"
+                                                                   Foreground="{ThemeResource SystemFillColorCautionBrush}" />
+                                                    </Border>
+                                                    <TextBlock Grid.Column="2" Text="{x:Bind Description}"
+                                                               FontSize="12"
+                                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Sections & Deep Scan Grid -->
+                            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                                    CornerRadius="8" Padding="16">
+                                <StackPanel Spacing="16">
+                                    <TextBlock x:Uid="TriagePeSectionsTitle"
+                                               Text="Binary Sections &amp; Anomaly Detection" FontWeight="SemiBold" />
+
+                                    <Grid ColumnSpacing="12" Padding="8,6"
+                                          Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
+                                          CornerRadius="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.5*" />
+                                            <ColumnDefinition Width="1.2*" />
+                                            <ColumnDefinition Width="1.2*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="2.5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock x:Uid="TriageColName" Grid.Column="0" Text="Name"
+                                                   FontWeight="SemiBold" FontSize="12" />
+                                        <TextBlock Grid.Column="1" Text="Raw Size" FontWeight="SemiBold" FontSize="12" />
+                                        <TextBlock x:Uid="TriageColVSize" Grid.Column="2" Text="Virtual Size"
+                                                   FontWeight="SemiBold" FontSize="12" />
+                                        <TextBlock x:Uid="TriageColEntropy" Grid.Column="3" Text="Entropy"
+                                                   FontWeight="SemiBold" FontSize="12" />
+                                        <TextBlock Grid.Column="4" Text="Anomalies / Flags" FontWeight="SemiBold"
+                                                   FontSize="12" />
+                                    </Grid>
+
+                                    <ListView ItemsSource="{x:Bind ViewModel.Sections, Mode=OneWay}"
+                                              SelectionMode="None">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:SectionInfo">
+                                                <Grid ColumnSpacing="12" Padding="8,6">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1.5*" />
+                                                        <ColumnDefinition Width="1.2*" />
+                                                        <ColumnDefinition Width="1.2*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="2.5*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{x:Bind Name}" FontWeight="Medium" />
+                                                    <TextBlock Grid.Column="1" Text="{x:Bind RawSize}" />
+                                                    <TextBlock Grid.Column="2" Text="{x:Bind VirtualSize}" />
+                                                    <TextBlock Grid.Column="3" Text="{x:Bind Entropy}" />
+                                                    <TextBlock Grid.Column="4" Text="{x:Bind AnomaliesSummary}"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               Foreground="{ThemeResource SystemFillColorCautionBrush}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+
+                                    <MenuFlyoutSeparator Margin="0,8" />
+                                    <TextBlock x:Uid="TriageBinwalkTitle" Text="Binwalk Embedded Files"
+                                               FontWeight="SemiBold" />
+
+                                    <ItemsControl ItemsSource="{x:Bind ViewModel.BinwalkResults, Mode=OneWay}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid ColumnSpacing="12" Margin="0,4">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" Text="{Binding Offset}"
+                                                               Foreground="{ThemeResource SystemFillColorCautionBrush}"
+                                                               FontWeight="SemiBold" />
+                                                    <TextBlock Grid.Column="1" Text="{Binding Description}"
+                                                               TextWrapping="Wrap"
+                                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+
+                            <Expander x:Uid="TriageRawJsonExpander" Header="Raw JSON Output"
+                                      HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                      Margin="0,24,0,0">
+                                <TextBox Text="{x:Bind ViewModel.RawJson, Mode=OneWay}" Height="250"
+                                         AcceptsReturn="True" TextWrapping="Wrap"
+                                         ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"
+                                         FontFamily="Cascadia Mono, Consolas"
+                                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                            </Expander>
+                        </StackPanel>
+
+                        <!-- Loading State overlay on Dashboard -->
+                        <StackPanel Visibility="{x:Bind ViewModel.IsScanning, Mode=OneWay}"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16">
+                            <ProgressRing IsActive="True" Width="64" Height="64" HorizontalAlignment="Center" />
+                            <TextBlock Text="{x:Bind ViewModel.ScanStatusText, Mode=OneWay}"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" FontWeight="SemiBold"
+                                       HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Row 3: Scan Library Container -->
+                <StackPanel Grid.Row="3" Visibility="{x:Bind views:TriagePage.BoolToVisibility(ViewModel.IsScanLibraryVisible), Mode=OneWay}"
+                            Spacing="16">
+                    <!-- Search bar -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            x:Uid="TriageSearchInput"
+                            PlaceholderText="Search scan library by filename, MD5, SHA256, packer, platform..."
+                            Padding="12,8" />
+                        <Button Grid.Column="1" x:Uid="TriageSearchBtn"
+                                Command="{x:Bind ViewModel.SearchScanLibraryCommand}" Content="Search" Margin="8,0,0,0"
+                                Padding="16,8" />
+                    </Grid>
+
+                    <!-- Data Cards List -->
+                    <ListView ItemsSource="{x:Bind ViewModel.RecentScans, Mode=OneWay}"
+                              SelectionMode="None"
+                              ShowsScrollingPlaceholders="False">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,12" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TriageResult">
+                                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        Padding="16">
+                                    <Grid RowSpacing="10">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Top Row: File Name and Actions -->
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <FontIcon Grid.Column="0" Glyph="&#xE8E5;" FontSize="18" Margin="0,0,10,0"
+                                                      VerticalAlignment="Center"
+                                                      Foreground="{ThemeResource SystemAccentColor}" />
+
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{x:Bind FileName}"
+                                                       FontWeight="SemiBold"
+                                                       FontSize="16"
+                                                       VerticalAlignment="Center" />
+
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                                                <Button x:Uid="TriageViewBtn" Content="View"
+                                                        Click="ReopenScan_Click"
+                                                        Tag="{x:Bind}"
+                                                        Style="{StaticResource AccentButtonStyle}"
+                                                        Padding="12,6" />
+
+                                                <Button x:Uid="TriageCopyMd5Btn" Content="Copy MD5"
+                                                        Tag="{x:Bind MD5Hash}"
+                                                        Click="CopyMd5_Click"
+                                                        Padding="12,6" />
+
+                                                <Button x:Uid="TriageDeleteLibBtn"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        Click="DeleteScan_Click"
+                                                        Tag="{x:Bind}"
+                                                        ToolTipService.ToolTip="Delete from library"
+                                                        Padding="6">
+                                                    <FontIcon Glyph="&#xE74D;" FontSize="14" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <!-- Middle Row: Full Path -->
+                                        <TextBlock Grid.Row="1"
+                                                   Text="{x:Bind FilePath}"
+                                                   FontSize="12"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                   TextTrimming="CharacterEllipsis" />
+
+                                        <!-- Bottom Row: Metadata Badges -->
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="16">
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <FontIcon Glyph="&#xE7F4;" FontSize="12"
+                                                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                <TextBlock Text="{x:Bind Platform}" FontSize="12" />
+                                                <TextBlock Text="{x:Bind Architecture}" FontSize="12"
+                                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <TextBlock x:Uid="TriageLibPackerLabel" Text="Packer:" FontSize="12"
+                                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                <TextBlock Text="{x:Bind Packer}" FontSize="12" FontWeight="SemiBold" />
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <TextBlock x:Uid="TriageLibEntropyLabel" Text="Entropy:" FontSize="12"
+                                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                <TextBlock Text="{x:Bind Entropy}" FontSize="12" FontWeight="SemiBold" />
+                                            </StackPanel>
+
+                                            <Border Background="{ThemeResource SystemFillColorNeutralBackgroundBrush}"
+                                                    CornerRadius="4" Padding="6,2">
+                                                <TextBlock Text="{x:Bind RecommendedPipeline}" FontSize="11"
+                                                           FontWeight="Medium" />
+                                            </Border>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

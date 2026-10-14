@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitleTextBlock.Text" xml:space="preserve">
+    <value>RE CommandCenter 2.0</value>
+  </data>
+  <data name="NavChat.Content" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="NavTriage.Content" xml:space="preserve">
+    <value>Triage</value>
+  </data>
+  <data name="NavSettings.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="LanguageTitle.Text" xml:space="preserve">
+    <value>Language</value>
+  </data>
+
+  <data name="LanguageDefault.Content" xml:space="preserve">
+    <value>System Default</value>
+  </data>
+  <data name="AppearanceTitle.Text" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="ThemeComboBox.Header" xml:space="preserve">
+    <value>App Theme</value>
+  </data>
+  <data name="ThemeDefault.Content" xml:space="preserve">
+    <value>System Default</value>
+  </data>
+  <data name="ThemeLight.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ThemeDark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="BackdropTitle.Text" xml:space="preserve">
+    <value>Window Material</value>
+  </data>
+  <data name="BackdropComboBox.Header" xml:space="preserve">
+    <value>Background Effect</value>
+  </data>
+  <data name="BackdropMica.Content" xml:space="preserve">
+    <value>Mica (Windows 11)</value>
+  </data>
+  <data name="BackdropMicaAlt.Content" xml:space="preserve">
+    <value>Mica Alt</value>
+  </data>
+  <data name="BackdropAcrylic.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="BackdropNone.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="AccentTitle.Text" xml:space="preserve">
+    <value>Accent Color</value>
+  </data>
+  <data name="SystemAccentToggle.Header" xml:space="preserve">
+    <value>Use Windows System Accent Color</value>
+  </data>
+  <data name="CustomAccentTitle.Text" xml:space="preserve">
+    <value>Custom Accent Color</value>
+  </data>
+  <data name="ChatNewConversation.Text" xml:space="preserve">
+    <value>New Conversation</value>
+  </data>
+  <data name="ChatSelectConversations.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Select Conversations</value>
+  </data>
+  <data name="ChatSearchHistory.PlaceholderText" xml:space="preserve">
+    <value>Search conversations...</value>
+  </data>
+  <data name="ChatProjectsHeader.Text" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="ChatFilterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="ChatAddProjectButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Add Project</value>
+  </data>
+  <data name="ChatNewProjConvButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>New Conversation in this project</value>
+  </data>
+  <data name="ChatRenameItem.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ChatDeleteItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ChatOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="ChatDeleteBtnIcon.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ChatDeleteSelected.Text" xml:space="preserve">
+    <value>Delete Selected</value>
+  </data>
+  <data name="ChatToggleSidebar.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle Sidebar</value>
+  </data>
+  <data name="ChatCopyButton.Content" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="ChatInputBox.PlaceholderText" xml:space="preserve">
+    <value>Type a message or command (e.g. /triage d:\file.dll, /md5 ...)</value>
+  </data>
+  <data name="ChatSendButton.Content" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="ChatCopiedText.Text" xml:space="preserve">
+    <value>Copied!</value>
+  </data>
+  <data name="TriageHeaderTitle.Text" xml:space="preserve">
+    <value>Automated File Triage</value>
+  </data>
+  <data name="TriageHeaderSubtitle.Text" xml:space="preserve">
+    <value>Select an executable to extract LIEF, DIE, Binwalk, and Authenticode metadata.</value>
+  </data>
+  <data name="TriageActiveAnalysisBtnText.Text" xml:space="preserve">
+    <value>Active Analysis</value>
+  </data>
+  <data name="TriageScanLibraryBtnText.Text" xml:space="preserve">
+    <value>Scan Library</value>
+  </data>
+  <data name="TriageTargetFileTitle.Text" xml:space="preserve">
+    <value>Target File</value>
+  </data>
+  <data name="TriageTargetFileSubtitle.Text" xml:space="preserve">
+    <value>Choose a local file to analyze</value>
+  </data>
+  <data name="TriageFilePathInput.PlaceholderText" xml:space="preserve">
+    <value>C:\path\to\file.exe</value>
+  </data>
+  <data name="TriageBrowseBtn.Content" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="TriageScanBtn.Content" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="TriageCompleteBanner.Title" xml:space="preserve">
+    <value>Triage Complete</value>
+  </data>
+  <data name="TriageCompleteBanner.Message" xml:space="preserve">
+    <value>All static analysis engines successfully processed the file.</value>
+  </data>
+  <data name="TriageIdentityHashesTitle.Text" xml:space="preserve">
+    <value>Identity &amp; Hashes</value>
+  </data>
+  <data name="TriageSizeLabel.Text" xml:space="preserve">
+    <value>Size:</value>
+  </data>
+  <data name="TriageMagicLabel.Text" xml:space="preserve">
+    <value>Magic:</value>
+  </data>
+  <data name="TriagePlatformLabel.Text" xml:space="preserve">
+    <value>Platform:</value>
+  </data>
+  <data name="TriageMd5Label.Text" xml:space="preserve">
+    <value>MD5:</value>
+  </data>
+  <data name="TriageSha256Label.Text" xml:space="preserve">
+    <value>SHA-256:</value>
+  </data>
+  <data name="TriageSecurityPackersTitle.Text" xml:space="preserve">
+    <value>Security &amp; Packers</value>
+  </data>
+  <data name="TriageEntropyLabel.Text" xml:space="preserve">
+    <value>Entropy:</value>
+  </data>
+  <data name="TriagePackerLabel.Text" xml:space="preserve">
+    <value>Packer:</value>
+  </data>
+  <data name="TriageAuthLabel.Text" xml:space="preserve">
+    <value>Authenticode:</value>
+  </data>
+  <data name="TriagePipelineLabel.Text" xml:space="preserve">
+    <value>Pipeline:</value>
+  </data>
+  <data name="TriageHighPackedLabel.Text" xml:space="preserve">
+    <value>High / Packed</value>
+  </data>
+  <data name="TriageSuspiciousImportsTitle.Text" xml:space="preserve">
+    <value>Suspicious Imports</value>
+  </data>
+  <data name="TriageDieTitle.Text" xml:space="preserve">
+    <value>Detect-It-Easy Signatures</value>
+  </data>
+  <data name="TriagePeSectionsTitle.Text" xml:space="preserve">
+    <value>PE Sections (LIEF)</value>
+  </data>
+  <data name="TriageColName.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TriageColVSize.Text" xml:space="preserve">
+    <value>Virtual Size</value>
+  </data>
+  <data name="TriageColEntropy.Text" xml:space="preserve">
+    <value>Entropy</value>
+  </data>
+  <data name="TriageColChars.Text" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
+  <data name="TriageBinwalkTitle.Text" xml:space="preserve">
+    <value>Binwalk Embedded Files</value>
+  </data>
+  <data name="TriageRawJsonExpander.Header" xml:space="preserve">
+    <value>Raw JSON Output</value>
+  </data>
+  <data name="TriageSearchInput.PlaceholderText" xml:space="preserve">
+    <value>Search scan library by filename, MD5, SHA256, packer, platform...</value>
+  </data>
+  <data name="TriageSearchBtn.Content" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="TriageViewBtn.Content" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="TriageCopyMd5Btn.Content" xml:space="preserve">
+    <value>Copy MD5</value>
+  </data>
+  <data name="TriageDeleteLibBtn.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete from library</value>
+  </data>
+  <data name="TriageLibPackerLabel.Text" xml:space="preserve">
+    <value>Packer:</value>
+  </data>
+  <data name="TriageLibEntropyLabel.Text" xml:space="preserve">
+    <value>Entropy:</value>
+  </data>
+  <data name="ChatPinText" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="ChatUnpinText" xml:space="preserve">
+    <value>Unpin</value>
+  </data>
+  <data name="TimeJustNow" xml:space="preserve">
+    <value>just now</value>
+  </data>
+  <data name="ChatGeneralText" xml:space="preserve">
+    <value>Conversations</value>
+  </data>
+  <data name="ChatPinnedText" xml:space="preserve">
+    <value>Pinned Conversations</value>
+  </data>
+  <data name="ChatNewConversationTitle" xml:space="preserve">
+    <value>New Conversation</value>
+  </data>
+  <data name="ChatNoConversationsText" xml:space="preserve">
+    <value>No conversations</value>
+  </data>
+  <data name="ChatNoProjectText" xml:space="preserve">
+    <value>No Project</value>
+  </data>
+  <data name="NavGeneralCard.Header" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="NavGeneralCard.Description" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="NavAppearanceCard.Header" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="NavAppearanceCard.Description" xml:space="preserve">
+    <value>Theme, Window material, Accent color</value>
+  </data>
+  <data name="NavAICard.Header" xml:space="preserve">
+    <value>AI &amp; Models</value>
+  </data>
+  <data name="NavAICard.Description" xml:space="preserve">
+    <value>Antigravity, Ollama, API keys</value>
+  </data>
+  <data name="AiProviderTitle.Text" xml:space="preserve"><value>AI Provider</value></data>
+  <data name="AiProviderDesc.Text" xml:space="preserve"><value>Configure all AI providers here. Choose the active model from the chat header.</value></data>
+  <data name="AiProviderComboBox.Header" xml:space="preserve"><value>AI Provider</value></data>
+  <data name="AiProviderAntigravity.Content" xml:space="preserve"><value>Antigravity</value></data>
+  <data name="AiProviderOllama.Content" xml:space="preserve"><value>Ollama (Local / Cloud)</value></data>
+  <data name="AntigravitySignInButton.Content" xml:space="preserve"><value>Sign In with Google</value></data>
+  <data name="AntigravityLogoutButton.Content" xml:space="preserve"><value>Log out</value></data>
+  <data name="AntigravityViewUsageButton.Content" xml:space="preserve"><value>View Usage</value></data>
+  <data name="OllamaViewUsageButton.Content" xml:space="preserve"><value>View Usage on Web</value></data>
+  <data name="AntigravityAccountStatusText.Text" xml:space="preserve"><value>Not logged in</value></data>
+  <data name="OllamaPortTextBox.Header" xml:space="preserve"><value>Ollama Port</value></data>
+  <data name="OllamaPortTextBox.PlaceholderText" xml:space="preserve"><value>11434</value></data>
+  <data name="OllamaModelComboBox.Header" xml:space="preserve"><value>Model Name</value></data>
+  <data name="OllamaModelComboBox.PlaceholderText" xml:space="preserve"><value>Select a model</value></data>
+  <data name="OllamaAddModelButton.Content" xml:space="preserve"><value>Add Model</value></data>
+  <data name="ApiKeysTitle.Text" xml:space="preserve"><value>API keys</value></data>
+  <data name="ApiKeysDesc.Text" xml:space="preserve"><value>API keys can be used to access cloud models or other capabilities such as web search.</value></data>
+  <data name="OllamaAddApiKeyButton.Content" xml:space="preserve"><value>Add API Key</value></data>
+  <data name="UsageDialog.CloseButtonText" xml:space="preserve"><value>Close</value></data>
+  <data name="UsageDialogTitle.Text" xml:space="preserve"><value>Cloud usage</value></data>
+  <data name="UsageDialogFree.Text" xml:space="preserve"><value>Free</value></data>
+  <data name="UsageDialogDesc1.Text" xml:space="preserve"><value>Cloud models and capabilities such as web search contribute to session and weekly limits.</value></data>
+  <data name="UsageDialogUpgradeText.Text" xml:space="preserve"><value>Upgrade</value></data>
+  <data name="UsageDialogDesc2.Text" xml:space="preserve"><value> for higher limits.</value></data>
+  <data name="UsageDialogSession.Text" xml:space="preserve"><value>Session usage</value></data>
+  <data name="UsageDialogWeekly.Text" xml:space="preserve"><value>Weekly usage</value></data>
+  <data name="SessionResetText.Text" xml:space="preserve"><value>Resets in 2 hours.</value></data>
+  <data name="WeeklyResetText.Text" xml:space="preserve"><value>Resets on Sunday.</value></data>
+  <data name="NotifyLimitsCheck.Content" xml:space="preserve"><value>Notify me when I'm close to hitting my usage limits</value></data>
+  <data name="UsagePercentUsed" xml:space="preserve"><value>{0}% used</value></data>
+  <data name="UsageButtonText" xml:space="preserve"><value>Usage</value></data>
+  <data name="UsageRefreshButton.Content" xml:space="preserve"><value>Refresh</value></data>
+  <data name="UsageResetAt" xml:space="preserve"><value>Resets at {0}</value></data>
+  <data name="UsageGeminiModels" xml:space="preserve"><value>Gemini Models</value></data>
+  <data name="UsageClaudeGptModels" xml:space="preserve"><value>Claude and GPT models</value></data>
+  <data name="UsageWeeklyLimitRemaining" xml:space="preserve"><value>Weekly Limit Remaining</value></data>
+  <data name="UsageFiveHourLimitRemaining" xml:space="preserve"><value>Five Hour Limit Remaining</value></data>
+  <data name="UsageRemainingFormat" xml:space="preserve"><value>{0}% remaining</value></data>
+  <data name="UsageOllamaCloud" xml:space="preserve"><value>Ollama Cloud</value></data>
+  <data name="UsageFiveHourActivity" xml:space="preserve"><value>Five-hour activity</value></data>
+  <data name="UsageWeeklyActivity" xml:space="preserve"><value>Weekly activity</value></data>
+  <data name="UsageRequestsFormat" xml:space="preserve"><value>{0} requests</value></data>
+  <data name="UsageQuotaUnavailable" xml:space="preserve"><value>Quota/reset data is not exposed by Ollama; activity is tracked locally.</value></data>
+  <data name="UsageModelsUsed" xml:space="preserve"><value>Models used</value></data>
+  <data name="UsageOllamaFiveHourReset" xml:space="preserve"><value>Resets in 5 hours.</value></data>
+  <data name="UsageOllamaWeeklyReset" xml:space="preserve"><value>Resets in 7 days.</value></data>
+  <data name="UsageNoModels" xml:space="preserve"><value>No models used in the last 7 days.</value></data>
+  <data name="AntigravityProviderTitle.Text" xml:space="preserve"><value>Antigravity</value></data>
+  <data name="OllamaProviderTitle.Text" xml:space="preserve"><value>Ollama</value></data>
+  <data name="ViewUsageToolTip" xml:space="preserve"><value>View usage</value></data>
+  <data name="ModelCloudLabel" xml:space="preserve"><value>Cloud ☁️</value></data>
+  <data name="ModelLocalLabel" xml:space="preserve"><value>Local</value></data>
+  <data name="SigningInStatus" xml:space="preserve"><value>Signing in...</value></data>
+  <data name="SigningOutStatus" xml:space="preserve"><value>Signing out...</value></data>
+  <data name="LoginFlowCompletedStatus" xml:space="preserve"><value>Login flow completed</value></data>
+  <data name="AntigravityCliOpenedStatus" xml:space="preserve"><value>Antigravity CLI opened; complete sign-in there</value></data>
+  <data name="AntigravityCliNotFoundStatus" xml:space="preserve"><value>Antigravity CLI was not found. Install agy first.</value></data>
+  <data name="AuthenticatedText" xml:space="preserve"><value>Authenticated</value></data>
+  <data name="OllamaSignInTitle" xml:space="preserve"><value>Sign in to Ollama Cloud</value></data>
+  <data name="ApiKeyPlaceholder" xml:space="preserve"><value>Enter API key / bearer token</value></data>
+  <data name="SaveButton" xml:space="preserve"><value>Save</value></data>
+  <data name="CancelButton" xml:space="preserve"><value>Cancel</value></data>
+  <data name="AddOllamaModelTitle" xml:space="preserve"><value>Add Ollama model</value></data>
+  <data name="AddOllamaModelPlaceholder" xml:space="preserve"><value>Enter model name (e.g. llama3)</value></data>
+  <data name="CheckAddButton" xml:space="preserve"><value>Check/Add</value></data>
+  <data name="PullingModelTitle" xml:space="preserve"><value>Pulling model</value></data>
+  <data name="RunningOllamaPull" xml:space="preserve"><value>Running ollama pull {0}...</value></data>
+  <data name="ErrorTitle" xml:space="preserve"><value>Error</value></data>
+  <data name="OllamaPullFailed" xml:space="preserve"><value>Failed to pull model. Please check that Ollama is installed and running.</value></data>
+  <data name="OkButton" xml:space="preserve"><value>OK</value></data>
+  <data name="OllamaCloudPrefix" xml:space="preserve"><value>Ollama (Cloud ☁️)</value></data>
+  <data name="OllamaLocalPrefix" xml:space="preserve"><value>Ollama (Local)</value></data>
+  <data name="GeneralSettingsTitle.Text" xml:space="preserve"><value>General</value></data>
+  <data name="LanguageCard.Header" xml:space="preserve"><value>Language</value></data>
+  <data name="LanguageCard.Description" xml:space="preserve"><value>Choose display language</value></data>
+  <data name="AppearanceSettingsTitle.Text" xml:space="preserve"><value>Appearance</value></data>
+  <data name="ThemeCard.Header" xml:space="preserve"><value>App Theme</value></data>
+  <data name="ThemeCard.Description" xml:space="preserve"><value>Select app theme</value></data>
+  <data name="BackdropCard.Header" xml:space="preserve"><value>Window Material</value></data>
+  <data name="BackdropCard.Description" xml:space="preserve"><value>Background Effect</value></data>
+  <data name="AccentExpander.Header" xml:space="preserve"><value>Accent Color</value></data>
+  <data name="AccentExpander.Description" xml:space="preserve"><value>System or custom accent color</value></data>
+  <data name="SystemAccentToggle.OnContent" xml:space="preserve"><value>System</value></data>
+  <data name="SystemAccentToggle.OffContent" xml:space="preserve"><value>Custom</value></data>
+  <data name="CustomColorCard.Header" xml:space="preserve"><value>Custom Accent Color</value></data>
+  <data name="AISettingsTitle.Text" xml:space="preserve"><value>AI &amp; Models</value></data>
+  <data name="AntigravityExpander.Header" xml:space="preserve"><value>Antigravity</value></data>
+  <data name="AntigravityExpander.Description" xml:space="preserve"><value>Google Deepmind</value></data>
+  <data name="OllamaExpander.Header" xml:space="preserve"><value>Ollama</value></data>
+  <data name="OllamaExpander.Description" xml:space="preserve"><value>Local and Cloud Models</value></data>
+  <data name="OllamaPortCard.Header" xml:space="preserve"><value>Ollama Port</value></data>
+  <data name="OllamaModelCard.Header" xml:space="preserve"><value>Models</value></data>
+  <data name="CloudUsageTitle.Text" xml:space="preserve"><value>Cloud usage</value></data>
+  <data name="InlineUsageRefreshButton.Content" xml:space="preserve"><value>Refresh</value></data>
+  <data name="ApiKeysCard.Header" xml:space="preserve"><value>API keys</value></data>
+  <data name="ApiKeysCard.Description" xml:space="preserve"><value>Access cloud models or capabilities like web search</value></data>
+  <data name="DeleteSessionDialogTitle" xml:space="preserve"><value>Confirm Delete</value></data>
+  <data name="DeleteSessionDialogContent" xml:space="preserve"><value>Are you sure you want to delete the conversation '{0}'?</value></data>
+  <data name="DeleteSessionsDialogTitle" xml:space="preserve"><value>Delete Selected Conversations</value></data>
+  <data name="DeleteSessionsDialogContent" xml:space="preserve"><value>Are you sure you want to delete {0} selected conversations? This action cannot be undone.</value></data>
+  <data name="DeleteAllButton" xml:space="preserve"><value>Delete All</value></data>
+  <data name="ChatUsageButtonText.Text" xml:space="preserve"><value>Usage</value></data>
+  <data name="ChatUsageButton.ToolTipService.ToolTip" xml:space="preserve"><value>View Usage</value></data>
+  <data name="AntigravityQuotaTitle" xml:space="preserve"><value>Usage Quota</value></data>
+  <data name="AntigravityRefreshQuota" xml:space="preserve"><value>Refresh Quota</value></data>
+  <data name="AntigravityAccountStatusText_Checking" xml:space="preserve"><value>Checking account status...</value></data>
+  <data name="AntigravityAccountStatusText_LoggedIn" xml:space="preserve"><value>Logged in via Desktop app</value></data>
+  <data name="AntigravityAccountStatusText_NotLoggedIn" xml:space="preserve"><value>Not logged in. Log in via Antigravity Desktop app.</value></data>
+  <data name="OllamaModelsCard.Header" xml:space="preserve"><value>Installed models</value></data>
+  <data name="OllamaModelsCard.Description" xml:space="preserve"><value>Manage and download local Ollama models</value></data>
+  <data name="OllamaNoModelsText" xml:space="preserve"><value>No models installed. Click Add Model to pull a model.</value></data>
+  <data name="DeleteModelDialogTitle" xml:space="preserve"><value>Delete Model</value></data>
+  <data name="DeleteModelDialogContent" xml:space="preserve"><value>Are you sure you want to delete model '{0}'? This will free up disk space.</value></data>
+  <data name="DeleteModelButton" xml:space="preserve"><value>Delete</value></data>
+  <data name="ApiKeysExpander.Header" xml:space="preserve"><value>API keys &amp; Providers</value></data>
+  <data name="ApiKeysExpander.Description" xml:space="preserve"><value>Manage API keys for cloud models and web search services</value></data>
+  <data name="AddApiKeyButton.Content" xml:space="preserve"><value>Add API Key</value></data>
+  <data name="AddApiKeyDialogTitle" xml:space="preserve"><value>Add API Key</value></data>
+  <data name="ApiKeyProviderLabel" xml:space="preserve"><value>Provider</value></data>
+  <data name="KeyConfiguredText" xml:space="preserve"><value>Configured</value></data>
+  <data name="KeyNotConfiguredText" xml:space="preserve"><value>Not configured</value></data>
+  <data name="RemoveApiKeyDialogTitle" xml:space="preserve"><value>Remove API Key</value></data>
+  <data name="RemoveApiKeyDialogContent" xml:space="preserve"><value>Are you sure you want to remove the API key for '{0}'?</value></data>
+  <data name="NoApiKeysConfigured" xml:space="preserve"><value>No API keys added. Click Add API Key to configure cloud providers.</value></data>
+  <data name="NoQuotaInfoTitle" xml:space="preserve"><value>Antigravity Quota</value></data>
+  <data name="NoQuotaInfoDesc" xml:space="preserve"><value>Click Refresh Quota to fetch latest account limits.</value></data>
+  <data name="NavMcpCard.Header" xml:space="preserve"><value>MCP Connections</value></data>
+  <data name="NavMcpCard.Description" xml:space="preserve"><value>Manage and test MCP tools (IDA Pro, Triage, etc.)</value></data>
+  <data name="McpSettingsTitle.Text" xml:space="preserve"><value>MCP Connections</value></data>
+  <data name="McpSettingsDesc.Text" xml:space="preserve"><value>Manage and verify Model Context Protocol (MCP) server integrations.</value></data>
+  <data name="McpTestAllButton.Content" xml:space="preserve"><value>Test All Connections</value></data>
+  <data name="McpStatusUntested" xml:space="preserve"><value>Untested</value></data>
+  <data name="McpTestButton" xml:space="preserve"><value>Test</value></data>
+  <data name="McpStatusConnecting" xml:space="preserve"><value>Connecting...</value></data>
+  <data name="McpStatusConnected" xml:space="preserve"><value>🟢 Connected ({0} tools)</value></data>
+  <data name="McpStatusDisconnected" xml:space="preserve"><value>🔴 Disconnected: {0}</value></data>
+  <data name="McpStatusError" xml:space="preserve"><value>🔴 Error: {0}</value></data>
+  <data name="McpEndpointUrl" xml:space="preserve"><value>Endpoint URL</value></data>
+  <data name="McpCommand" xml:space="preserve"><value>Command</value></data>
+  <data name="McpTimeout" xml:space="preserve"><value>Timeout</value></data>
+  <data name="McpTimeoutFormat" xml:space="preserve"><value>{0} seconds</value></data>
+</root>

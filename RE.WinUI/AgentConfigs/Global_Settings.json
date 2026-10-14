@@ -1,0 +1,18 @@
+{
+  "app_theme": 0,
+  "backdrop_material": "MicaAlt",
+  "use_system_accent_color": true,
+  "custom_accent_color": "#B318FF",
+  "app_language": "default",
+  "ai_provider": "Ollama",
+  "ollama_port": "11434",
+  "ollama_model": "nemotron-3-ultra:cloud",
+  "antigravity_model": "gemini-3.7-flash-medium",
+  "is_antigravity_logged_in": false,
+  "antigravity_account_email": "",
+  "last_selected_provider": "Ollama",
+  "last_selected_model": "",
+  "antigravity_cached_models": "[]",
+  "ollama_cached_models": "[]",
+  "api_keys": []
+}

@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppTitleTextBlock.Text" xml:space="preserve">
+    <value>RE CommandCenter 2.0</value>
+  </data>
+  <data name="NavChat.Content" xml:space="preserve">
+    <value>Trò chuyện</value>
+  </data>
+  <data name="NavTriage.Content" xml:space="preserve">
+    <value>Phân tích (Triage)</value>
+  </data>
+  <data name="NavSettings.Content" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="SettingsTitle.Text" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="LanguageTitle.Text" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+
+  <data name="LanguageDefault.Content" xml:space="preserve">
+    <value>Mặc định hệ thống</value>
+  </data>
+  <data name="AppearanceTitle.Text" xml:space="preserve">
+    <value>Giao diện</value>
+  </data>
+  <data name="ThemeComboBox.Header" xml:space="preserve">
+    <value>Chủ đề ứng dụng</value>
+  </data>
+  <data name="ThemeDefault.Content" xml:space="preserve">
+    <value>Mặc định hệ thống</value>
+  </data>
+  <data name="ThemeLight.Content" xml:space="preserve">
+    <value>Sáng</value>
+  </data>
+  <data name="ThemeDark.Content" xml:space="preserve">
+    <value>Tối</value>
+  </data>
+  <data name="BackdropTitle.Text" xml:space="preserve">
+    <value>Hiệu ứng cửa sổ</value>
+  </data>
+  <data name="BackdropComboBox.Header" xml:space="preserve">
+    <value>Hiệu ứng nền</value>
+  </data>
+  <data name="BackdropMica.Content" xml:space="preserve">
+    <value>Mica (Windows 11)</value>
+  </data>
+  <data name="BackdropMicaAlt.Content" xml:space="preserve">
+    <value>Mica Alt</value>
+  </data>
+  <data name="BackdropAcrylic.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="BackdropNone.Content" xml:space="preserve">
+    <value>Không</value>
+  </data>
+  <data name="AccentTitle.Text" xml:space="preserve">
+    <value>Màu chủ đạo</value>
+  </data>
+  <data name="SystemAccentToggle.Header" xml:space="preserve">
+    <value>Đồng bộ màu với hệ thống</value>
+  </data>
+  <data name="CustomAccentTitle.Text" xml:space="preserve">
+    <value>Tùy chỉnh màu chủ đạo</value>
+  </data>
+  <data name="ChatNewConversation.Text" xml:space="preserve">
+    <value>Tạo cuộc trò chuyện</value>
+  </data>
+  <data name="ChatSelectConversations.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Chọn cuộc trò chuyện</value>
+  </data>
+  <data name="ChatSearchHistory.PlaceholderText" xml:space="preserve">
+    <value>Tìm kiếm cuộc trò chuyện...</value>
+  </data>
+  <data name="ChatProjectsHeader.Text" xml:space="preserve">
+    <value>Dự án</value>
+  </data>
+  <data name="ChatFilterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Lọc</value>
+  </data>
+  <data name="ChatAddProjectButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Thêm dự án</value>
+  </data>
+  <data name="ChatNewProjConvButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tạo cuộc trò chuyện trong dự án này</value>
+  </data>
+  <data name="ChatRenameItem.Text" xml:space="preserve">
+    <value>Đổi tên</value>
+  </data>
+  <data name="ChatDeleteItem.Text" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="ChatOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tùy chọn</value>
+  </data>
+  <data name="ChatDeleteBtnIcon.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="ChatDeleteSelected.Text" xml:space="preserve">
+    <value>Xóa mục đã chọn</value>
+  </data>
+  <data name="ChatToggleSidebar.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Ẩn/Hiện thanh bên</value>
+  </data>
+  <data name="ChatCopyButton.Content" xml:space="preserve">
+    <value>Sao chép</value>
+  </data>
+  <data name="ChatInputBox.PlaceholderText" xml:space="preserve">
+    <value>Nhập tin nhắn hoặc lệnh (ví dụ: /triage d:\file.dll, /md5 ...)</value>
+  </data>
+  <data name="ChatSendButton.Content" xml:space="preserve">
+    <value>Gửi</value>
+  </data>
+  <data name="ChatCopiedText.Text" xml:space="preserve">
+    <value>Đã chép!</value>
+  </data>
+  <data name="TriageHeaderTitle.Text" xml:space="preserve">
+    <value>Phân tích tập tin tự động</value>
+  </data>
+  <data name="TriageHeaderSubtitle.Text" xml:space="preserve">
+    <value>Chọn một tệp thực thi để trích xuất dữ liệu LIEF, DIE, Binwalk và Authenticode.</value>
+  </data>
+  <data name="TriageActiveAnalysisBtnText.Text" xml:space="preserve">
+    <value>Phân tích trực tiếp</value>
+  </data>
+  <data name="TriageScanLibraryBtnText.Text" xml:space="preserve">
+    <value>Thư viện quét</value>
+  </data>
+  <data name="TriageTargetFileTitle.Text" xml:space="preserve">
+    <value>Tệp mục tiêu</value>
+  </data>
+  <data name="TriageTargetFileSubtitle.Text" xml:space="preserve">
+    <value>Chọn một tệp trên máy để phân tích</value>
+  </data>
+  <data name="TriageFilePathInput.PlaceholderText" xml:space="preserve">
+    <value>C:\đường_dẫn\tới\file.exe</value>
+  </data>
+  <data name="TriageBrowseBtn.Content" xml:space="preserve">
+    <value>Duyệt...</value>
+  </data>
+  <data name="TriageScanBtn.Content" xml:space="preserve">
+    <value>Quét</value>
+  </data>
+  <data name="TriageCompleteBanner.Title" xml:space="preserve">
+    <value>Phân tích hoàn tất</value>
+  </data>
+  <data name="TriageCompleteBanner.Message" xml:space="preserve">
+    <value>Tất cả các engine phân tích tĩnh đã xử lý tệp thành công.</value>
+  </data>
+  <data name="TriageIdentityHashesTitle.Text" xml:space="preserve">
+    <value>Nhận dạng &amp; Hashes</value>
+  </data>
+  <data name="TriageSizeLabel.Text" xml:space="preserve">
+    <value>Kích thước:</value>
+  </data>
+  <data name="TriageMagicLabel.Text" xml:space="preserve">
+    <value>Magic:</value>
+  </data>
+  <data name="TriagePlatformLabel.Text" xml:space="preserve">
+    <value>Platform:</value>
+  </data>
+  <data name="TriageMd5Label.Text" xml:space="preserve">
+    <value>MD5:</value>
+  </data>
+  <data name="TriageSha256Label.Text" xml:space="preserve">
+    <value>SHA-256:</value>
+  </data>
+  <data name="TriageSecurityPackersTitle.Text" xml:space="preserve">
+    <value>Bảo mật &amp; Packers</value>
+  </data>
+  <data name="TriageEntropyLabel.Text" xml:space="preserve">
+    <value>Entropy:</value>
+  </data>
+  <data name="TriagePackerLabel.Text" xml:space="preserve">
+    <value>Packer:</value>
+  </data>
+  <data name="TriageAuthLabel.Text" xml:space="preserve">
+    <value>Authenticode:</value>
+  </data>
+  <data name="TriagePipelineLabel.Text" xml:space="preserve">
+    <value>Quy trình đề xuất:</value>
+  </data>
+  <data name="TriageHighPackedLabel.Text" xml:space="preserve">
+    <value>High / Packed</value>
+  </data>
+  <data name="TriageSuspiciousImportsTitle.Text" xml:space="preserve">
+    <value>Suspicious Imports</value>
+  </data>
+  <data name="TriageDieTitle.Text" xml:space="preserve">
+    <value>Detect-It-Easy Signatures</value>
+  </data>
+  <data name="TriagePeSectionsTitle.Text" xml:space="preserve">
+    <value>PE Sections (LIEF)</value>
+  </data>
+  <data name="TriageColName.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="TriageColVSize.Text" xml:space="preserve">
+    <value>Virtual Size</value>
+  </data>
+  <data name="TriageColEntropy.Text" xml:space="preserve">
+    <value>Entropy</value>
+  </data>
+  <data name="TriageColChars.Text" xml:space="preserve">
+    <value>Characteristics</value>
+  </data>
+  <data name="TriageBinwalkTitle.Text" xml:space="preserve">
+    <value>Binwalk Embedded Files</value>
+  </data>
+  <data name="TriageRawJsonExpander.Header" xml:space="preserve">
+    <value>Raw JSON Output</value>
+  </data>
+  <data name="TriageSearchInput.PlaceholderText" xml:space="preserve">
+    <value>Tìm kiếm thư viện theo tên tệp, MD5, SHA256, packer, platform...</value>
+  </data>
+  <data name="TriageSearchBtn.Content" xml:space="preserve">
+    <value>Tìm kiếm</value>
+  </data>
+  <data name="TriageViewBtn.Content" xml:space="preserve">
+    <value>Xem</value>
+  </data>
+  <data name="TriageCopyMd5Btn.Content" xml:space="preserve">
+    <value>Chép MD5</value>
+  </data>
+  <data name="TriageDeleteLibBtn.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Xóa khỏi thư viện</value>
+  </data>
+  <data name="TriageLibPackerLabel.Text" xml:space="preserve">
+    <value>Packer:</value>
+  </data>
+  <data name="TriageLibEntropyLabel.Text" xml:space="preserve">
+    <value>Entropy:</value>
+  </data>
+  <data name="ChatPinText" xml:space="preserve">
+    <value>Ghim</value>
+  </data>
+  <data name="ChatUnpinText" xml:space="preserve">
+    <value>Bỏ ghim</value>
+  </data>
+  <data name="TimeJustNow" xml:space="preserve">
+    <value>bây giờ</value>
+  </data>
+  <data name="ChatGeneralText" xml:space="preserve">
+    <value>Cuộc trò chuyện</value>
+  </data>
+  <data name="ChatPinnedText" xml:space="preserve">
+    <value>Cuộc trò chuyện đã ghim</value>
+  </data>
+  <data name="ChatNewConversationTitle" xml:space="preserve">
+    <value>Cuộc trò chuyện mới</value>
+  </data>
+  <data name="ChatNoConversationsText" xml:space="preserve">
+    <value>Chưa có cuộc trò chuyện nào</value>
+  </data>
+  <data name="ChatNoProjectText" xml:space="preserve">
+    <value>Không có dự án</value>
+  </data>
+  <data name="NavGeneralCard.Header" xml:space="preserve">
+    <value>Chung</value>
+  </data>
+  <data name="NavGeneralCard.Description" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="NavAppearanceCard.Header" xml:space="preserve">
+    <value>Giao diện</value>
+  </data>
+  <data name="NavAppearanceCard.Description" xml:space="preserve">
+    <value>Giao diện, Hiệu ứng nền, Màu nhấn</value>
+  </data>
+  <data name="NavAICard.Header" xml:space="preserve">
+    <value>AI &amp; Mô hình</value>
+  </data>
+  <data name="NavAICard.Description" xml:space="preserve">
+    <value>Antigravity, Ollama, API keys</value>
+  </data>
+  <data name="AiProviderTitle.Text" xml:space="preserve"><value>Nhà cung cấp AI</value></data>
+  <data name="AiProviderDesc.Text" xml:space="preserve"><value>Cấu hình tất cả nhà cung cấp AI tại đây. Chọn model đang dùng ở phần đầu khung chat.</value></data>
+  <data name="AiProviderComboBox.Header" xml:space="preserve"><value>Nhà cung cấp AI</value></data>
+  <data name="AiProviderAntigravity.Content" xml:space="preserve"><value>Antigravity</value></data>
+  <data name="AiProviderOllama.Content" xml:space="preserve"><value>Ollama (Cục bộ / Đám mây)</value></data>
+  <data name="AntigravitySignInButton.Content" xml:space="preserve"><value>Đăng nhập bằng Google</value></data>
+  <data name="AntigravityLogoutButton.Content" xml:space="preserve"><value>Đăng xuất</value></data>
+  <data name="AntigravityViewUsageButton.Content" xml:space="preserve"><value>Xem mức sử dụng</value></data>
+  <data name="OllamaViewUsageButton.Content" xml:space="preserve"><value>Xem mức sử dụng trên Web</value></data>
+  <data name="AntigravityAccountStatusText.Text" xml:space="preserve"><value>Chưa đăng nhập</value></data>
+  <data name="OllamaPortTextBox.Header" xml:space="preserve"><value>Cổng Ollama</value></data>
+  <data name="OllamaPortTextBox.PlaceholderText" xml:space="preserve"><value>11434</value></data>
+  <data name="OllamaModelComboBox.Header" xml:space="preserve"><value>Tên Model</value></data>
+  <data name="OllamaModelComboBox.PlaceholderText" xml:space="preserve"><value>Chọn một model</value></data>
+  <data name="OllamaAddModelButton.Content" xml:space="preserve"><value>Thêm mô hình</value></data>
+  <data name="ApiKeysTitle.Text" xml:space="preserve"><value>Khóa API</value></data>
+  <data name="ApiKeysDesc.Text" xml:space="preserve"><value>Khóa API có thể được sử dụng để truy cập các model đám mây hoặc các tính năng khác như tìm kiếm trên web.</value></data>
+  <data name="OllamaAddApiKeyButton.Content" xml:space="preserve"><value>Thêm Khóa API</value></data>
+  <data name="UsageDialog.CloseButtonText" xml:space="preserve"><value>Đóng</value></data>
+  <data name="UsageDialogTitle.Text" xml:space="preserve"><value>Sử dụng đám mây</value></data>
+  <data name="UsageDialogFree.Text" xml:space="preserve"><value>Miễn phí</value></data>
+  <data name="UsageDialogDesc1.Text" xml:space="preserve"><value>Các model đám mây và tính năng như tìm kiếm web tính vào giới hạn phiên và hàng tuần.</value></data>
+  <data name="UsageDialogUpgradeText.Text" xml:space="preserve"><value>Nâng cấp</value></data>
+  <data name="UsageDialogDesc2.Text" xml:space="preserve"><value> để có giới hạn cao hơn.</value></data>
+  <data name="UsageDialogSession.Text" xml:space="preserve"><value>Sử dụng trong phiên</value></data>
+  <data name="UsageDialogWeekly.Text" xml:space="preserve"><value>Sử dụng hàng tuần</value></data>
+  <data name="SessionResetText.Text" xml:space="preserve"><value>Làm mới sau 2 giờ.</value></data>
+  <data name="WeeklyResetText.Text" xml:space="preserve"><value>Làm mới vào Chủ nhật.</value></data>
+  <data name="NotifyLimitsCheck.Content" xml:space="preserve"><value>Thông báo cho tôi khi gần đạt đến giới hạn sử dụng</value></data>
+  <data name="UsagePercentUsed" xml:space="preserve"><value>{0}% đã dùng</value></data>
+  <data name="UsageButtonText" xml:space="preserve"><value>Mức dùng</value></data>
+  <data name="UsageRefreshButton.Content" xml:space="preserve"><value>Làm mới</value></data>
+  <data name="UsageResetAt" xml:space="preserve"><value>Làm mới lúc {0}</value></data>
+  <data name="UsageGeminiModels" xml:space="preserve"><value>Các model Gemini</value></data>
+  <data name="UsageClaudeGptModels" xml:space="preserve"><value>Các model Claude và GPT</value></data>
+  <data name="UsageWeeklyLimitRemaining" xml:space="preserve"><value>Giới hạn tuần còn lại</value></data>
+  <data name="UsageFiveHourLimitRemaining" xml:space="preserve"><value>Giới hạn 5 giờ còn lại</value></data>
+  <data name="UsageRemainingFormat" xml:space="preserve"><value>{0}% còn lại</value></data>
+  <data name="UsageOllamaCloud" xml:space="preserve"><value>Ollama Cloud</value></data>
+  <data name="UsageFiveHourActivity" xml:space="preserve"><value>Hoạt động trong 5 giờ</value></data>
+  <data name="UsageWeeklyActivity" xml:space="preserve"><value>Hoạt động trong tuần</value></data>
+  <data name="UsageRequestsFormat" xml:space="preserve"><value>{0} lượt gọi</value></data>
+  <data name="UsageQuotaUnavailable" xml:space="preserve"><value>Ollama chưa cung cấp dữ liệu quota/reset qua API; ứng dụng đang theo dõi hoạt động cục bộ.</value></data>
+  <data name="UsageModelsUsed" xml:space="preserve"><value>Model đã dùng</value></data>
+  <data name="UsageOllamaFiveHourReset" xml:space="preserve"><value>Làm mới sau 5 giờ.</value></data>
+  <data name="UsageOllamaWeeklyReset" xml:space="preserve"><value>Làm mới sau 7 ngày.</value></data>
+  <data name="UsageNoModels" xml:space="preserve"><value>Chưa dùng model nào trong 7 ngày qua.</value></data>
+  <data name="AntigravityProviderTitle.Text" xml:space="preserve"><value>Antigravity</value></data>
+  <data name="OllamaProviderTitle.Text" xml:space="preserve"><value>Ollama</value></data>
+  <data name="ViewUsageToolTip" xml:space="preserve"><value>Xem mức sử dụng</value></data>
+  <data name="ModelCloudLabel" xml:space="preserve"><value>Đám mây ☁️</value></data>
+  <data name="ModelLocalLabel" xml:space="preserve"><value>Cục bộ</value></data>
+  <data name="SigningInStatus" xml:space="preserve"><value>Đang đăng nhập...</value></data>
+  <data name="SigningOutStatus" xml:space="preserve"><value>Đang đăng xuất...</value></data>
+  <data name="LoginFlowCompletedStatus" xml:space="preserve"><value>Đã hoàn tất đăng nhập</value></data>
+  <data name="AntigravityCliOpenedStatus" xml:space="preserve"><value>Đã mở Antigravity CLI; hãy hoàn tất đăng nhập ở đó</value></data>
+  <data name="AntigravityCliNotFoundStatus" xml:space="preserve"><value>Không tìm thấy Antigravity CLI. Hãy cài agy trước.</value></data>
+  <data name="AuthenticatedText" xml:space="preserve"><value>Đã xác thực</value></data>
+  <data name="OllamaSignInTitle" xml:space="preserve"><value>Đăng nhập Ollama Cloud</value></data>
+  <data name="ApiKeyPlaceholder" xml:space="preserve"><value>Nhập API key / bearer token</value></data>
+  <data name="SaveButton" xml:space="preserve"><value>Lưu</value></data>
+  <data name="CancelButton" xml:space="preserve"><value>Hủy</value></data>
+  <data name="AddOllamaModelTitle" xml:space="preserve"><value>Thêm model Ollama</value></data>
+  <data name="AddOllamaModelPlaceholder" xml:space="preserve"><value>Nhập tên model (ví dụ: llama3)</value></data>
+  <data name="CheckAddButton" xml:space="preserve"><value>Kiểm tra/Thêm</value></data>
+  <data name="PullingModelTitle" xml:space="preserve"><value>Đang tải model</value></data>
+  <data name="RunningOllamaPull" xml:space="preserve"><value>Đang chạy ollama pull {0}...</value></data>
+  <data name="ErrorTitle" xml:space="preserve"><value>Lỗi</value></data>
+  <data name="OllamaPullFailed" xml:space="preserve"><value>Không thể tải model. Hãy kiểm tra Ollama đã được cài đặt và đang chạy.</value></data>
+  <data name="OkButton" xml:space="preserve"><value>OK</value></data>
+  <data name="OllamaCloudPrefix" xml:space="preserve"><value>Ollama (Đám mây ☁️)</value></data>
+  <data name="OllamaLocalPrefix" xml:space="preserve"><value>Ollama (Cục bộ)</value></data>
+  <data name="GeneralSettingsTitle.Text" xml:space="preserve"><value>Chung</value></data>
+  <data name="LanguageCard.Header" xml:space="preserve"><value>Ngôn ngữ</value></data>
+  <data name="LanguageCard.Description" xml:space="preserve"><value>Chọn ngôn ngữ hiển thị</value></data>
+  <data name="AppearanceSettingsTitle.Text" xml:space="preserve"><value>Giao diện</value></data>
+  <data name="ThemeCard.Header" xml:space="preserve"><value>Chủ đề ứng dụng</value></data>
+  <data name="ThemeCard.Description" xml:space="preserve"><value>Chọn chủ đề ứng dụng</value></data>
+  <data name="BackdropCard.Header" xml:space="preserve"><value>Hiệu ứng cửa sổ</value></data>
+  <data name="BackdropCard.Description" xml:space="preserve"><value>Hiệu ứng nền</value></data>
+  <data name="AccentExpander.Header" xml:space="preserve"><value>Màu chủ đạo</value></data>
+  <data name="AccentExpander.Description" xml:space="preserve"><value>Màu hệ thống hoặc tùy chỉnh</value></data>
+  <data name="SystemAccentToggle.OnContent" xml:space="preserve"><value>Hệ thống</value></data>
+  <data name="SystemAccentToggle.OffContent" xml:space="preserve"><value>Tùy chỉnh</value></data>
+  <data name="CustomColorCard.Header" xml:space="preserve"><value>Tùy chỉnh màu chủ đạo</value></data>
+  <data name="AISettingsTitle.Text" xml:space="preserve"><value>AI &amp; Mô hình</value></data>
+  <data name="AntigravityExpander.Header" xml:space="preserve"><value>Antigravity</value></data>
+  <data name="AntigravityExpander.Description" xml:space="preserve"><value>Google Deepmind</value></data>
+  <data name="OllamaExpander.Header" xml:space="preserve"><value>Ollama</value></data>
+  <data name="OllamaExpander.Description" xml:space="preserve"><value>Mô hình cục bộ và đám mây</value></data>
+  <data name="OllamaPortCard.Header" xml:space="preserve"><value>Cổng Ollama</value></data>
+  <data name="OllamaModelCard.Header" xml:space="preserve"><value>Mô hình</value></data>
+  <data name="CloudUsageTitle.Text" xml:space="preserve"><value>Sử dụng đám mây</value></data>
+  <data name="InlineUsageRefreshButton.Content" xml:space="preserve"><value>Làm mới</value></data>
+  <data name="ApiKeysCard.Header" xml:space="preserve"><value>Khóa API</value></data>
+  <data name="ApiKeysCard.Description" xml:space="preserve"><value>Truy cập các mô hình đám mây hoặc tính năng như tìm kiếm web</value></data>
+  <data name="DeleteSessionDialogTitle" xml:space="preserve"><value>Xác nhận xóa</value></data>
+  <data name="DeleteSessionDialogContent" xml:space="preserve"><value>Bạn có chắc chắn muốn xóa cuộc trò chuyện '{0}' không?</value></data>
+  <data name="DeleteSessionsDialogTitle" xml:space="preserve"><value>Xóa các cuộc trò chuyện đã chọn</value></data>
+  <data name="DeleteSessionsDialogContent" xml:space="preserve"><value>Bạn có chắc chắn muốn xóa {0} cuộc trò chuyện đã chọn? Thao tác này không thể hoàn tác.</value></data>
+  <data name="DeleteAllButton" xml:space="preserve"><value>Xóa tất cả</value></data>
+  <data name="ChatUsageButtonText.Text" xml:space="preserve"><value>Mức dùng</value></data>
+  <data name="ChatUsageButton.ToolTipService.ToolTip" xml:space="preserve"><value>Xem mức sử dụng</value></data>
+  <data name="AntigravityQuotaTitle" xml:space="preserve"><value>Hạn mức sử dụng</value></data>
+  <data name="AntigravityRefreshQuota" xml:space="preserve"><value>Làm mới hạn mức</value></data>
+  <data name="AntigravityAccountStatusText_Checking" xml:space="preserve"><value>Đang kiểm tra trạng thái tài khoản...</value></data>
+  <data name="AntigravityAccountStatusText_LoggedIn" xml:space="preserve"><value>Đã đăng nhập qua ứng dụng Desktop</value></data>
+  <data name="AntigravityAccountStatusText_NotLoggedIn" xml:space="preserve"><value>Chưa đăng nhập. Vui lòng đăng nhập qua ứng dụng Antigravity Desktop.</value></data>
+  <data name="OllamaModelsCard.Header" xml:space="preserve"><value>Mô hình đã cài đặt</value></data>
+  <data name="OllamaModelsCard.Description" xml:space="preserve"><value>Quản lý và tải các mô hình Ollama trên máy</value></data>
+  <data name="OllamaNoModelsText" xml:space="preserve"><value>Chưa có mô hình nào được cài đặt. Nhấn Thêm mô hình để tải về.</value></data>
+  <data name="DeleteModelDialogTitle" xml:space="preserve"><value>Xóa mô hình</value></data>
+  <data name="DeleteModelDialogContent" xml:space="preserve"><value>Bạn có chắc chắn muốn xóa mô hình '{0}' không? Thao tác này sẽ giải phóng dung lượng ổ đĩa.</value></data>
+  <data name="DeleteModelButton" xml:space="preserve"><value>Xóa</value></data>
+  <data name="ApiKeysExpander.Header" xml:space="preserve"><value>Khóa API &amp; Nhà cung cấp</value></data>
+  <data name="ApiKeysExpander.Description" xml:space="preserve"><value>Quản lý khóa API cho các mô hình đám mây và dịch vụ tìm kiếm web</value></data>
+  <data name="AddApiKeyButton.Content" xml:space="preserve"><value>Thêm khóa API</value></data>
+  <data name="AddApiKeyDialogTitle" xml:space="preserve"><value>Thêm khóa API mới</value></data>
+  <data name="ApiKeyProviderLabel" xml:space="preserve"><value>Nhà cung cấp</value></data>
+  <data name="KeyConfiguredText" xml:space="preserve"><value>Đã cấu hình</value></data>
+  <data name="KeyNotConfiguredText" xml:space="preserve"><value>Chưa cấu hình</value></data>
+  <data name="RemoveApiKeyDialogTitle" xml:space="preserve"><value>Xóa khóa API</value></data>
+  <data name="RemoveApiKeyDialogContent" xml:space="preserve"><value>Bạn có chắc chắn muốn xóa khóa API của nhà cung cấp '{0}'?</value></data>
+  <data name="NoApiKeysConfigured" xml:space="preserve"><value>Chưa có khóa API nào. Nhấn Thêm khóa API để cấu hình dịch vụ đám mây.</value></data>
+  <data name="NoQuotaInfoTitle" xml:space="preserve"><value>Hạn mức Antigravity</value></data>
+  <data name="NoQuotaInfoDesc" xml:space="preserve"><value>Nhấn Làm mới hạn mức để tải hạn mức tài khoản mới nhất.</value></data>
+  <data name="NavMcpCard.Header" xml:space="preserve"><value>Kết nối MCP</value></data>
+  <data name="NavMcpCard.Description" xml:space="preserve"><value>Quản lý và kiểm tra các công cụ MCP (IDA Pro, Triage,...)</value></data>
+  <data name="McpSettingsTitle.Text" xml:space="preserve"><value>Kết nối MCP</value></data>
+  <data name="McpSettingsDesc.Text" xml:space="preserve"><value>Quản lý và xác minh tích hợp máy chủ Model Context Protocol (MCP).</value></data>
+  <data name="McpTestAllButton.Content" xml:space="preserve"><value>Kiểm tra tất cả kết nối</value></data>
+  <data name="McpStatusUntested" xml:space="preserve"><value>Chưa kiểm tra</value></data>
+  <data name="McpTestButton" xml:space="preserve"><value>Kiểm tra</value></data>
+  <data name="McpStatusConnecting" xml:space="preserve"><value>Đang kết nối...</value></data>
+  <data name="McpStatusConnected" xml:space="preserve"><value>🟢 Đã kết nối ({0} công cụ)</value></data>
+  <data name="McpStatusDisconnected" xml:space="preserve"><value>🔴 Ngắt kết nối: {0}</value></data>
+  <data name="McpStatusError" xml:space="preserve"><value>🔴 Lỗi: {0}</value></data>
+  <data name="McpEndpointUrl" xml:space="preserve"><value>URL điểm cuối</value></data>
+  <data name="McpCommand" xml:space="preserve"><value>Lệnh thực thi</value></data>
+  <data name="McpTimeout" xml:space="preserve"><value>Thời gian chờ</value></data>
+  <data name="McpTimeoutFormat" xml:space="preserve"><value>{0} giây</value></data>
+</root>

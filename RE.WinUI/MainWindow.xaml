@@ -1,0 +1,58 @@
+<Window
+    x:Class="RE.WinUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="using:RE.WinUI.Views"
+    Title="RE CommandCenter 2.0"
+    mc:Ignorable="d">
+
+    <!--
+        Do not make the entire window a drop target.  Doing so makes every page
+        advertise that it accepts files, then discards the drop in MainWindow.
+        TriagePage is the sole owner of file drops.
+    -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="AppTitleBar" Background="Transparent" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
+                <TextBlock x:Uid="AppTitleTextBlock" x:Name="AppTitleTextBlock" Text="RE CommandCenter 2.0"
+                           FontSize="12" VerticalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+
+        <NavigationView x:Name="NavView"
+                        Grid.Row="1"
+                        Background="Transparent"
+                        IsBackButtonVisible="Visible"
+                        PaneDisplayMode="Left"
+                        OpenPaneLength="320"
+                        BackRequested="NavView_BackRequested"
+                        SelectionChanged="NavView_SelectionChanged"
+                        ItemInvoked="NavView_ItemInvoked"
+                        Loaded="NavView_Loaded">
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="NavChat" x:Name="NavChat" Content="Chat" Tag="ChatPage" Icon="Message" />
+                <NavigationViewItem x:Uid="NavTriage" x:Name="NavTriage" Content="Triage" Tag="TriagePage"
+                                    Icon="Document" />
+            </NavigationView.MenuItems>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <InfoBar x:Name="SettingsStorageError" IsOpen="False" Severity="Error"
+                         Title="Settings need attention" Margin="16,8,16,0"
+                         AutomationProperties.AutomationId="SettingsStorageError"
+                         AutomationProperties.Name="Settings storage error" />
+                <Frame x:Name="ContentFrame" Grid.Row="1" />
+            </Grid>
+        </NavigationView>
+    </Grid>
+</Window>

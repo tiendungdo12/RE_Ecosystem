@@ -1,0 +1,36 @@
+<Page
+    x:Class="RE.WinUI.Views.Settings.McpSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d"
+    Background="Transparent"
+    SizeChanged="Page_SizeChanged">
+
+    <ScrollViewer>
+        <StackPanel x:Name="MainStackPanel" Spacing="8" HorizontalAlignment="Center" Padding="56,30,56,30">
+            <TextBlock x:Name="DetailTitle" x:Uid="McpSettingsTitle" Text="MCP Connections"
+                       Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,8" />
+            <TextBlock x:Name="DetailDescription" x:Uid="McpSettingsDesc"
+                       Text="Manage and verify Model Context Protocol (MCP) server integrations."
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,16" />
+
+            <!-- Action Bar -->
+            <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+                <Button x:Name="RefreshAllButton" x:Uid="McpTestAllButton" Content="Test All Connections"
+                        Click="RefreshAllButton_Click">
+                    <Button.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="F5" />
+                    </Button.KeyboardAccelerators>
+                </Button>
+                <ProgressRing x:Name="GlobalProgressRing" Width="16" Height="16" IsActive="False"
+                              Visibility="Collapsed" VerticalAlignment="Center" />
+            </StackPanel>
+
+            <!-- Tools Container -->
+            <StackPanel x:Name="ToolsListStackPanel" Spacing="8" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,0 +1,49 @@
+<Page
+    x:Class="RE.WinUI.Views.Settings.SettingsMainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d"
+    Background="Transparent"
+    SizeChanged="Page_SizeChanged">
+
+    <ScrollViewer>
+        <StackPanel x:Name="MasterStackPanel" Spacing="4" HorizontalAlignment="Center" Padding="56,30,56,30">
+            <TextBlock x:Name="SettingsTitle" x:Uid="SettingsTitle" Text="Settings"
+                       Style="{StaticResource TitleTextBlockStyle}" Margin="0,0,0,16" />
+
+            <controls:SettingsCard x:Name="NavGeneralCard" x:Uid="NavGeneralCard" Header="General"
+                                   Description="Language" IsClickEnabled="True" Click="NavCard_Click" Tag="General">
+                <controls:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE713;" />
+                </controls:SettingsCard.HeaderIcon>
+            </controls:SettingsCard>
+
+            <controls:SettingsCard x:Name="NavAppearanceCard" x:Uid="NavAppearanceCard" Header="Appearance"
+                                   Description="Theme, Window material, Accent color" IsClickEnabled="True"
+                                   Click="NavCard_Click" Tag="Appearance">
+                <controls:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE771;" />
+                </controls:SettingsCard.HeaderIcon>
+            </controls:SettingsCard>
+
+            <controls:SettingsCard x:Name="NavAICard" x:Uid="NavAICard" Header="AI &amp; Models"
+                                   Description="Antigravity, Ollama, API keys" IsClickEnabled="True"
+                                   Click="NavCard_Click" Tag="AI">
+                <controls:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xEC05;" />
+                </controls:SettingsCard.HeaderIcon>
+            </controls:SettingsCard>
+
+            <controls:SettingsCard x:Name="NavMcpCard" x:Uid="NavMcpCard" Header="MCP Connections"
+                                   Description="Manage and test MCP tools (IDA Pro, Triage, etc.)"
+                                   IsClickEnabled="True" Click="NavCard_Click" Tag="MCP">
+                <controls:SettingsCard.HeaderIcon>
+                    <FontIcon Glyph="&#xE753;" />
+                </controls:SettingsCard.HeaderIcon>
+            </controls:SettingsCard>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

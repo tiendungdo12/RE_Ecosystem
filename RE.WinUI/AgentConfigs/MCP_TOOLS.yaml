@@ -1,0 +1,72 @@
+protocol_version: "2026-07-28"
+
+tools:
+  - id: "static.triage"
+    name: "Static Triage"
+    cluster: "MCP_Static_Analysis"
+    transport: "stdio"
+    runtime: "python"
+    working_directory: "mcp_server"
+    command: "Python_Runtime/python.exe"
+    args:
+      - "server.py"
+    capabilities:
+      - "triage.file.basic"
+      - "hash.file.md5"
+      - "hash.file.sha256"
+      - "detect.file.magic"
+      - "measure.file.entropy"
+    enabled: false
+    notes: "Deprecated in Phase 1: Canonical deterministic triage uses ITriagePipeline without MCP."
+
+  - id: "static.md5"
+    name: "MD5 Hash Calculator"
+    cluster: "MCP_Static_Analysis"
+    transport: "stdio"
+    runtime: "python"
+    working_directory: "mcp_server"
+    command: "Python_Runtime/python.exe"
+    args:
+      - "server.py"
+    capabilities:
+      - "hash.file.md5"
+    enabled: true
+    notes: "File MD5 hash calculator tool."
+
+  - id: "interactive.ida"
+    name: "IDA Pro MCP"
+    cluster: "MCP_Interactive_GUI"
+    transport: "stdio"
+    command: "uvx"
+    args:
+      - "--exclude-newer=1s"
+      - "ida-mcp"
+      - "stdio"
+    timeout_seconds: 30
+    capabilities:
+      - "open_database"
+      - "execute_python"
+      - "reference"
+      - "list_databases"
+      - "save_database"
+      - "close_database"
+    enabled: true
+    notes: "HexRays IDA-MCP chính thức (ida-mcp==20261008.0.1). Kết nối qua STDIO với IDA Pro 9.4+ qua IDA Nexus. Dùng uvx để tự động quản lý dependencies."
+
+  - id: "network.burp"
+    name: "Burp Suite MCP"
+    cluster: "MCP_Network_Traffic"
+    transport: "http"
+    endpoint: "http://127.0.0.1:9876/"
+    transport_mode: "sse"
+    timeout_seconds: 30
+    capabilities:
+      - "burp.http_history"
+      - "burp.repeater"
+      - "burp.intruder"
+      - "burp.scanner"
+      - "burp.collaborator"
+      - "burp.intercept"
+      - "burp.editor"
+    enabled: true
+    notes: "Burp Suite MCP Gateway. Kết nối trực tiếp qua HTTP SSE tới Burp Suite Extension (Port 9876)."

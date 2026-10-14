@@ -1,0 +1,11 @@
+<Solution>
+  <Project Path="RE.Domain\RE.Domain.csproj" />
+  <Project Path="RE.Application\RE.Application.csproj" />
+  <Project Path="RE.Infrastructure\RE.Infrastructure.csproj" />
+  <Project Path="RE.Presentation\RE.Presentation.csproj" />
+  <Project Path="RE.SecondUI\RE.SecondUI.csproj" />
+  <Project Path="RE.Core\RE.Core.csproj" />
+  <Project Path="RE.Platform.Windows\RE.Platform.Windows.csproj" />
+  <Project Path="RE.WinUI\RE.WinUI.csproj" />
+  <Project Path="App_Test\App_Test.csproj" />
+</Solution>

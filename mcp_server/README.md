@@ -1,33 +1,41 @@
-# Static Triage MCP Server
+# Direct Triage Runner and Legacy MCP Server
 
-Block 3.1 starts the real RE triage layer.
+> [!CAUTION]
+> **Trạng thái 13/10/2026:** `triage_file` MCP route là **LEGACY**, không thuộc canonical deterministic triage. Direct subprocess runner vẫn được pipeline sử dụng. PRE-H0 triage được user xác nhận DONE. Xem [`../docs/CURRENT_STATE.md`](../docs/CURRENT_STATE.md) và [`../docs/INTEROPERABILITY.md`](../docs/INTEROPERABILITY.md).
 
-This server intentionally uses only the Python standard library plus the MCP SDK. It does not depend on LIEF or DIE yet, so the black-box contract is simple and easy to test.
+## Vai trò hiện tại
 
-## Tool
+Tool được đăng ký trong MCP catalog (`@mcp.tool()`):
 
-`triage_file(path: str)`
+- `md5_file(path: str)` — tính MD5 của file, dùng cho verification/integrity check nội bộ.
+
+Lưu ý: `triage_file` **không** còn là MCP tool. Hàm vẫn tồn tại trong `server.py` làm reference/test helper nhưng không có decorator `@mcp.tool()`; không thể gọi qua MCP transport. Canonical triage path chạy trực tiếp qua `ITriagePipeline` -> `TriageService` -> `DirectTriageSubprocessAnalyzer` (subprocess gọi `direct_triage.py`).
+
+Source hiện tại dùng `fastmcp`, `lief`, AXML parser và malware rules nội bộ. Dependency phải được khóa bằng requirements/lock file đồng bộ với setup/CI; README cũ mô tả “chỉ standard library + MCP” không còn đúng.
 
 Input:
 
-- Local file path.
+- local file path.
 
-Output:
+Output hiện có thể chứa:
 
-- File existence and size.
-- MD5 and SHA256.
-- Magic bytes.
-- Basic file type and platform.
-- Basic architecture when PE/ELF headers are available.
-- Shannon entropy.
-- Signals and recommended pipeline.
+- file existence/size;
+- MD5/SHA256;
+- magic/type/platform/architecture;
+- entropy/sections/import summary;
+- Android metadata khi applicable;
+- signals/recommended pipeline.
 
-## Test
+## Current deterministic path and legacy boundary
 
-```powershell
-cd D:\RE_Ecosystem\RE_CommandCenter\Tools\MCP_Static_Analysis\triage_server
-python -m pip install -r requirements.txt
-.\test_mcp_stdio.ps1
+```text
+PRE-H0 baseline (reported DONE):
+File -> ITriagePipeline (TriageService) -> direct analyzers (Hash, Authenticode, DIE, Binwalk) + DirectTriageSubprocessAnalyzer (direct_triage.py) -> TriageResult
+
+H3 (TARGET):
+External agent -> MCP -> headless Platform host -> Core services/policy -> direct or specialist adapters
+H7 (optional TARGET):
+IDE -> ACP -> RE Agent Runtime (AI Harness) -> Core services/policy
 ```
 
-Expected output includes `triage_file` in tools/list and a structured JSON result for this README.
+`TriageService` implements `ITriagePipeline`; `TriageOrchestrator` is an obsolete compatibility wrapper. The canonical pipeline does not use the registered MCP `triage_file` route. `direct_triage.py` is the subprocess runner. `server.py` retains legacy/reference MCP code; do not add canonical static triage to that route. Target capability MCP for external agents belongs to H3 and projects Core services through a separate Platform host. The host is not AI Harness; our optional H7 Agent Runtime and WinUI are not prerequisites.

@@ -1,0 +1,664 @@
+<Page
+    x:Class="RE.WinUI.Views.ChatPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:RE.WinUI.ViewModels"
+    xmlns:presentation="using:RE.Presentation.ViewModels"
+    xmlns:models="using:RE.Domain.Models"
+    xmlns:local="using:RE.WinUI.Views"
+    xmlns:converters="using:RE.WinUI.Converters"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <CollectionViewSource x:Name="GroupedSessionsSource" Source="{x:Bind ViewModel.GroupedSessions, Mode=OneWay}"
+                              IsSourceGrouped="True" />
+
+        <Style x:Key="SpaciousMenuFlyoutStyle" TargetType="MenuFlyoutPresenter">
+            <Setter Property="Padding" Value="4,4" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Background" Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="MenuFlyoutItem">
+                        <Setter Property="Padding" Value="16,10" />
+                        <Setter Property="CornerRadius" Value="4" />
+                        <Setter Property="Margin" Value="2,2" />
+                        <Setter Property="FontSize" Value="14" />
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Thickness x:Key="ListViewItemMultiSelectCheckBoxMargin">0,0,12,0</Thickness>
+    </Page.Resources>
+
+    <Grid>
+        <!-- SplitView for sidebar -->
+        <SplitView x:Name="ChatSplitView" DisplayMode="Inline" IsPaneOpen="True" OpenPaneLength="350"
+                   PaneBackground="Transparent">
+            <!-- Sidebar: Chat Sessions List -->
+            <SplitView.Pane>
+                <Border Background="Transparent"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="0,0,1,0"
+                        Padding="16,32,16,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <!-- New Conversation Button -->
+                            <Button x:Name="ChatNewConversationBtn" Grid.Column="0" HorizontalAlignment="Stretch"
+                                    Command="{Binding NewSessionCommand}"
+                                    Background="Transparent"
+                                    BorderBrush="{ThemeResource ControlElevationBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="12,8">
+                                <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                                    <FontIcon Glyph="&#xE710;" FontSize="14" />
+                                    <TextBlock x:Name="ChatNewConversationText" x:Uid="ChatNewConversation"
+                                               Text="New Conversation" />
+                                </StackPanel>
+                            </Button>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="8,0,0,0" Spacing="4">
+                                <Button x:Name="ChatAddProjectButtonTop" x:Uid="ChatAddProjectButton"
+                                        Style="{StaticResource SubtleButtonStyle}" Padding="8" Width="36" Height="36"
+                                        Click="AddProject_Click" ToolTipService.ToolTip="Add Project">
+                                    <FontIcon Glyph="&#xE8F4;" FontSize="14" /> <!-- Add Folder -->
+                                </Button>
+                                <ToggleButton x:Name="ChatSelectConversationsBtn"
+                                              Padding="8" Width="36" Height="36"
+                                              IsChecked="{Binding IsSelectionMode, Mode=TwoWay}"
+                                              CornerRadius="8"
+                                              x:Uid="ChatSelectConversations"
+                                              ToolTipService.ToolTip="Select Conversations">
+                                    <FontIcon Glyph="&#xE762;" FontSize="14" />
+                                </ToggleButton>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Search Bar -->
+                        <TextBox x:Name="ChatSearchBox" Grid.Row="1"
+                                 x:Uid="ChatSearchHistory"
+                                 Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 PlaceholderText="Search conversations..."
+                                 FontSize="12"
+                                 Height="38"
+                                 Padding="12,10,12,2"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0,0,0,16" />
+
+                        <!-- Remove Projects Header completely, we will just rely on ListView grouping -->
+                        <Grid Grid.Row="2" Margin="0,0,0,12" Visibility="Collapsed">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <!-- Match the 24px project action column. -->
+                                <ColumnDefinition Width="24" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock x:Name="ChatProjectsHeaderText" x:Uid="ChatProjectsHeader" Grid.Column="0"
+                                       Text="Projects" FontWeight="SemiBold" FontSize="14"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                       VerticalAlignment="Center" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
+                                <Button x:Name="ChatFilterButton" x:Uid="ChatFilterButton"
+                                        Style="{StaticResource SubtleButtonStyle}" Padding="4" Width="28" Height="28"
+                                        ToolTipService.ToolTip="Filter">
+                                    <FontIcon Glyph="&#xE71C;" FontSize="12" /> <!-- Filter -->
+                                </Button>
+                                <Button x:Name="ChatAddProjectButton" x:Uid="ChatAddProjectButton"
+                                        Style="{StaticResource SubtleButtonStyle}" Padding="4" Width="28" Height="28"
+                                        Click="AddProject_Click" ToolTipService.ToolTip="Add Project">
+                                    <FontIcon Glyph="&#xE8F4;" FontSize="12" /> <!-- Add Folder -->
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Sessions List -->
+                        <ListView x:Name="ChatListView" Grid.Row="3"
+                                  ItemsSource="{Binding Source={StaticResource GroupedSessionsSource}}"
+                                  SelectionMode="{x:Bind local:ChatPage.GetSelectionMode(ViewModel.IsSelectionMode), Mode=OneWay}"
+                                  SelectionChanged="ChatListView_SelectionChanged"
+                                  IsItemClickEnabled="True"
+                                  ItemClick="ChatListView_ItemClick"
+                                  ShowsScrollingPlaceholders="False"
+                                  ContainerContentChanging="ChatListView_ContainerContentChanging">
+
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderContainerStyle>
+                                        <Style TargetType="ListViewHeaderItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <!-- Match the header content bounds to ListViewItem content bounds. -->
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListViewHeaderItem">
+                                                        <ContentPresenter Content="{TemplateBinding Content}"
+                                                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                          Margin="{TemplateBinding Padding}"
+                                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.HeaderContainerStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate x:DataType="presentation:SessionGroup">
+                                            <Grid Margin="{x:Bind local:ChatPage.GetHeaderMargin(IsNested)}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <!-- Reserve the same fixed visual axis as the project + button. -->
+                                                    <ColumnDefinition Width="24" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Orientation="Horizontal" Spacing="8"
+                                                            VerticalAlignment="Center">
+                                                    <FontIcon
+                                                        Glyph="{x:Bind local:ChatPage.GetGroupIcon(Key, IsNested)}"
+                                                        FontSize="14"
+                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                        VerticalAlignment="Center" />
+                                                    <TextBlock Text="{x:Bind Key}"
+                                                               FontWeight="{x:Bind local:ChatPage.GetHeaderFontWeight(IsNested)}"
+                                                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                               FontSize="{x:Bind local:ChatPage.GetHeaderFontSize(IsNested)}"
+                                                               VerticalAlignment="Center" Margin="0,1,0,0" />
+                                                </StackPanel>
+
+                                                <!-- Create New Chat specifically for this Project -->
+                                                <Button Grid.Column="1"
+                                                        Visibility="{x:Bind local:ChatPage.GetAddButtonVisibility(Key)}"
+                                                        Style="{StaticResource SubtleButtonStyle}"
+                                                        VerticalAlignment="Center"
+                                                        Padding="4" Width="24" Height="24"
+                                                        Command="{Binding ElementName=ChatSplitView, Path=DataContext.NewProjectSessionCommand}"
+                                                        CommandParameter="{x:Bind Key}"
+                                                        x:Uid="ChatNewProjConvButton"
+                                                        ToolTipService.ToolTip="New Conversation in this project">
+                                                    <FontIcon Glyph="&#xE710;" FontSize="12"
+                                                              Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                                </Button>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+
+                            <ListView.Resources>
+                                <CornerRadius x:Key="ListViewItemCornerRadius">8</CornerRadius>
+                            </ListView.Resources>
+
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Margin" Value="4,3,4,3" />
+                                    <Setter Property="CornerRadius" Value="8" />
+                                    <Setter Property="MinHeight" Value="42" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <ListViewItemPresenter
+                                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                                    SelectionCheckMarkVisualEnabled="True"
+                                                    CheckBrush="White"
+                                                    CheckBoxBrush="Transparent"
+                                                    CheckBoxBorderBrush="{ThemeResource ControlStrongStrokeColorDefaultBrush}"
+                                                    CheckBoxPointerOverBrush="{ThemeResource ControlFillColorDefaultBrush}"
+                                                    CheckBoxPointerOverBorderBrush="{ThemeResource ControlStrongStrokeColorDefaultBrush}"
+                                                    CheckBoxPressedBrush="{ThemeResource ControlFillColorDefaultBrush}"
+                                                    CheckBoxPressedBorderBrush="{ThemeResource ControlStrongStrokeColorDefaultBrush}"
+                                                    CheckBoxSelectedBrush="{ThemeResource AccentFillColorDefaultBrush}"
+                                                    CheckBoxSelectedPointerOverBrush="{ThemeResource AccentFillColorSecondaryBrush}"
+                                                    CheckBoxSelectedPressedBrush="{ThemeResource AccentFillColorTertiaryBrush}"
+                                                    CheckBoxCornerRadius="4"
+                                                    DragBackground="{ThemeResource ListViewItemDragBackground}"
+                                                    DragForeground="{ThemeResource ListViewItemDragForeground}"
+                                                    FocusBorderBrush="{ThemeResource ListViewItemFocusBorderBrush}"
+                                                    FocusSecondaryBorderBrush="{ThemeResource ListViewItemFocusSecondaryBorderBrush}"
+                                                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackground}"
+                                                    PointerOverBackground="{ThemeResource ListViewItemBackgroundPointerOver}"
+                                                    PointerOverForeground="{ThemeResource ListViewItemForegroundPointerOver}"
+                                                    SelectedBackground="{ThemeResource ListViewItemBackgroundSelected}"
+                                                    SelectedForeground="{ThemeResource ListViewItemForegroundSelected}"
+                                                    SelectedPointerOverBackground="{ThemeResource ListViewItemBackgroundSelectedPointerOver}"
+                                                    PressedBackground="{ThemeResource ListViewItemBackgroundPressed}"
+                                                    SelectedPressedBackground="{ThemeResource ListViewItemBackgroundSelectedPressed}"
+                                                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                                                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                                                    ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    ContentMargin="{TemplateBinding Padding}"
+                                                    CheckMode="Inline"
+                                                    CornerRadius="8" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ChatSessionInfo">
+                                    <Grid Margin="16,0,12,0"
+                                          Visibility="{x:Bind local:ChatPage.GetNormalVisibility(IsPlaceholder)}"
+                                          Background="Transparent" PointerEntered="ChatSessionItem_PointerEntered"
+                                          PointerExited="ChatSessionItem_PointerExited">
+                                        <Grid.ContextFlyout>
+                                            <MenuFlyout
+                                                MenuFlyoutPresenterStyle="{StaticResource SpaciousMenuFlyoutStyle}">
+                                                <MenuFlyoutItem Text="{x:Bind local:ChatPage.GetPinText(IsPinned), Mode=OneWay}"
+                                                                Icon="Pin"
+                                                                Command="{Binding ElementName=ChatSplitView, Path=DataContext.TogglePinSessionCommand}"
+                                                                CommandParameter="{Binding}" />
+                                                <MenuFlyoutItem x:Uid="ChatRenameItem" Text="Rename" Icon="Rename"
+                                                                Click="RenameSession_Click" Tag="{Binding}" />
+                                                <MenuFlyoutItem x:Uid="ChatDeleteItem" Text="Delete" Icon="Delete"
+                                                                Click="DeleteSession_Click" Tag="{Binding}" />
+                                            </MenuFlyout>
+                                        </Grid.ContextFlyout>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,8,0">
+                                                <TextBlock Text="{x:Bind Title, Mode=OneWay}"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           FontSize="13" />
+                                                <TextBlock
+                                                    Text="{x:Bind local:ChatPage.GetProjectNameDisplay(ProjectName), Mode=OneWay}"
+                                                    FontSize="11"
+                                                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                                    Visibility="{x:Bind local:ChatPage.GetProjectSubtitleVisibility(IsPinned, ProjectName), Mode=OneWay}" />
+                                            </StackPanel>
+
+                                            <TextBlock x:Name="TimeText" Grid.Column="1"
+                                                       Text="{x:Bind local:ChatPage.FormatRelativeTime(RelativeTime), Mode=OneWay}"
+                                                       FontSize="11"
+                                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Right"
+                                                       TextAlignment="Right" />
+
+                                            <!-- Action Hover Panel -->
+                                            <Border x:Name="ActionPanel" Grid.Column="0" Grid.ColumnSpan="2"
+                                                    Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                    Background="Transparent" CornerRadius="8" Padding="2"
+                                                    BorderThickness="0" Margin="0,0,0,0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button x:Uid="ChatOptionsButton"
+                                                            Style="{StaticResource SubtleButtonStyle}" Padding="4"
+                                                            Margin="0,0,2,0" Width="32" Height="32"
+                                                            ToolTipService.ToolTip="Options">
+                                                        <FontIcon Glyph="&#xE712;" FontSize="14" />
+                                                        <Button.Flyout>
+                                                            <MenuFlyout
+                                                                MenuFlyoutPresenterStyle="{StaticResource SpaciousMenuFlyoutStyle}">
+                                                                <MenuFlyoutItem
+                                                                    Text="{x:Bind local:ChatPage.GetPinText(IsPinned), Mode=OneWay}"
+                                                                    Icon="Pin"
+                                                                    Command="{Binding ElementName=ChatSplitView, Path=DataContext.TogglePinSessionCommand}"
+                                                                    CommandParameter="{Binding}" />
+                                                                <MenuFlyoutItem x:Uid="ChatRenameItem" Text="Rename"
+                                                                        Icon="Rename" Click="RenameSession_Click"
+                                                                        Tag="{Binding}" />
+                                                                <MenuFlyoutItem x:Uid="ChatDeleteItem" Text="Delete"
+                                                                        Icon="Delete" Click="DeleteSession_Click"
+                                                                        Tag="{Binding}" />
+                                                            </MenuFlyout>
+                                                        </Button.Flyout>
+                                                    </Button>
+                                                    <Button Style="{StaticResource SubtleButtonStyle}" Padding="4"
+                                                            Margin="0,0,2,0" Width="32" Height="32"
+                                                            Command="{Binding ElementName=ChatSplitView, Path=DataContext.TogglePinSessionCommand}"
+                                                            CommandParameter="{Binding}">
+                                                        <FontIcon Glyph="{x:Bind local:ChatPage.GetPinGlyph(IsPinned)}"
+                                                                  FontSize="14" />
+                                                    </Button>
+                                                    <Button x:Uid="ChatDeleteBtnIcon"
+                                                            Style="{StaticResource SubtleButtonStyle}" Padding="4"
+                                                            Width="32" Height="32" ToolTipService.ToolTip="Delete"
+                                                            Click="DeleteSession_Click" Tag="{Binding}">
+                                                        <FontIcon Glyph="&#xE74D;" FontSize="14" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Grid>
+
+                                        <!-- Placeholder Text -->
+                                        <Grid
+                                            Visibility="{x:Bind local:ChatPage.GetPlaceholderVisibility(IsPlaceholder)}">
+                                            <TextBlock Text="{x:Bind Title, Mode=OneWay}"
+                                                       Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                                       VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!-- Multi-delete Button -->
+                        <Button x:Name="ChatDeleteSelectedBtn" Grid.Row="4" HorizontalAlignment="Stretch"
+                                Visibility="{x:Bind local:ChatPage.GetVisibility(ViewModel.IsSelectionMode), Mode=OneWay}"
+                                Click="DeleteSelected_Click"
+                                Background="#1AFA5252"
+                                BorderBrush="#33FA5252"
+                                BorderThickness="1"
+                                CornerRadius="8"
+                                Padding="12,10"
+                                Margin="0,12,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                                <FontIcon Glyph="&#xE74D;" FontSize="14" Foreground="#FA5252" />
+                                <TextBlock x:Name="ChatDeleteSelectedText" x:Uid="ChatDeleteSelected"
+                                           Text="Delete Selected" FontWeight="SemiBold" Foreground="#FA5252" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Border>
+            </SplitView.Pane>
+
+            <!-- Right Pane: Active Chat Area -->
+            <SplitView.Content>
+                <Grid Padding="24">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Grid Grid.Row="0" Margin="0,12,0,16" Height="32">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="ChatToggleSidebarBtn" Grid.Column="0"
+                                Style="{StaticResource SubtleButtonStyle}"
+                                Width="32"
+                                Height="32"
+                                Padding="0"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                VerticalAlignment="Center"
+                                Margin="0,0,12,0"
+                                Click="ToggleSidebarButton_Click"
+                                x:Uid="ChatToggleSidebar"
+                                ToolTipService.ToolTip="Toggle Sidebar">
+                            <FontIcon Glyph="&#xE700;" FontSize="16" Width="16" Height="16"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Button>
+
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding SelectedSession.Title, TargetNullValue='RE CommandCenter 2.0'}"
+                                   Style="{StaticResource SubtitleTextBlockStyle}"
+                                   VerticalAlignment="Center"
+                                   Margin="0,1,0,0"
+                                   TextTrimming="CharacterEllipsis" />
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <Button x:Name="ModelPickerButton" x:Uid="ModelPickerButton" Background="Transparent"
+                                    BorderThickness="0" CornerRadius="4" Height="32" Padding="8,4"
+                                    Style="{StaticResource SubtleButtonStyle}" VerticalAlignment="Center"
+                                    ToolTipService.ToolTip="Select model">
+                                <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                    <TextBlock x:Name="SelectedModelText"
+                                               Text="{Binding ViewModel.SelectedModel.DisplayName}"
+                                               FontWeight="SemiBold" FontSize="13" VerticalAlignment="Center" />
+                                    <FontIcon Glyph="&#xE70D;" FontSize="10"
+                                              Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                              VerticalAlignment="Center" />
+                                </StackPanel>
+                                <Button.Flyout>
+                                    <MenuFlyout x:Name="ModelPickerFlyout" />
+                                </Button.Flyout>
+                            </Button>
+                            <Button x:Name="ViewUsageButton" x:Uid="ChatUsageButton" VerticalAlignment="Center"
+                                    ToolTipService.ToolTip="View Usage" Style="{StaticResource AccentButtonStyle}"
+                                    Height="32" CornerRadius="4" Padding="8,4">
+                                <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                                    <FontIcon Glyph="&#xE9F3;" FontSize="14" />
+                                    <TextBlock x:Name="ViewUsageButtonText" x:Uid="ChatUsageButtonText" Text="Usage"
+                                               Margin="4,0,0,0" />
+                                </StackPanel>
+                                <Button.Flyout>
+                                    <Flyout x:Name="UsageFlyout" Opened="UsageFlyout_Opened"
+                                            Placement="BottomEdgeAlignedRight">
+                                        <Flyout.FlyoutPresenterStyle>
+                                            <Style TargetType="FlyoutPresenter">
+                                                <Setter Property="Padding" Value="20" />
+                                                <Setter Property="CornerRadius" Value="12" />
+                                                <Setter Property="MaxWidth" Value="440" />
+                                                <Setter Property="MinWidth" Value="440" />
+                                                <Setter Property="Background"
+                                                        Value="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" />
+                                                <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+                                                        Value="Disabled" />
+                                                <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
+                                                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                                                        Value="Disabled" />
+                                                <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
+                                            </Style>
+                                        </Flyout.FlyoutPresenterStyle>
+                                        <StackPanel Spacing="12">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8"
+                                                            VerticalAlignment="Center">
+                                                    <TextBlock x:Name="ChatUsageTitleText" x:Uid="UsageDialogTitle"
+                                                               Text="Cloud usage" FontWeight="SemiBold" FontSize="22"
+                                                               VerticalAlignment="Center" />
+                                                </StackPanel>
+                                                <Button x:Name="ChatRefreshUsageButton" x:Uid="UsageRefreshButton"
+                                                        Grid.Column="1" Content="Refresh" Padding="8,4" MinWidth="0"
+                                                        MinHeight="0" Style="{StaticResource AccentButtonStyle}"
+                                                        VerticalAlignment="Center"
+                                                        Click="RefreshUsageFlyoutButton_Click" />
+                                            </Grid>
+                                            <!-- Loading State -->
+                                            <ProgressRing x:Name="UsageLoadingRing" IsActive="True"
+                                                          Visibility="Collapsed" HorizontalAlignment="Center"
+                                                          Margin="0,24,0,24" />
+
+                                            <!-- Usage groups use one consistent vertical rhythm. -->
+                                            <ItemsControl x:Name="UsageItemsControl"
+                                                          ItemsSource="{Binding UsageGroups}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="presentation:UsageGroupDisplayModel">
+                                                        <StackPanel Spacing="12" Margin="0">
+                                                            <TextBlock Text="{Binding DisplayName}"
+                                                                       FontWeight="SemiBold" FontSize="16"
+                                                                       Foreground="{ThemeResource TextFillColorPrimaryBrush}" />
+                                                            <ItemsControl ItemsSource="{Binding Buckets}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate
+                                                                        x:DataType="presentation:UsageBucketDisplayModel">
+                                                                        <StackPanel Spacing="4" Margin="0,0,0,8">
+                                                                            <Grid>
+                                                                                <TextBlock Text="{Binding DisplayName}"
+                                                                                    HorizontalAlignment="Left" />
+                                                                                <TextBlock
+                                                                                    Text="{Binding RemainingPercentText}"
+                                                                                    HorizontalAlignment="Right" />
+                                                                            </Grid>
+                                                                            <ProgressBar
+                                                                                Value="{Binding RemainingPercent}"
+                                                                                Maximum="100" />
+                                                                            <TextBlock Text="{Binding ResetTimeText}"
+                                                                                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                                                                    FontSize="12" />
+                                                                        </StackPanel>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+
+                                            <CheckBox x:Name="NotifyLimitsCheck" IsChecked="True"
+                                                      Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                                      FontSize="14" HorizontalAlignment="Left"
+                                                      HorizontalContentAlignment="Left"
+                                                      VerticalContentAlignment="Center" Padding="0" MinHeight="28">
+                                                <TextBlock x:Name="NotifyLimitsText"
+                                                           Text="Notify me when I'm close to hitting my usage limits"
+                                                           Margin="8,0,0,0" VerticalAlignment="Center" />
+                                            </CheckBox>
+                                        </StackPanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <!-- Message Stream -->
+                    <ScrollViewer x:Name="ChatScrollViewer" Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                                  Visibility="{x:Bind local:ChatPage.GetChatVisibility(ViewModel.IsNewChat), Mode=OneWay}">
+                        <ItemsControl ItemsSource="{Binding ChatHistory}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,0,0,16" Padding="14" CornerRadius="8"
+                                                Background="{ThemeResource ControlFillColorDefaultBrush}">
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Text="{Binding Role}" FontWeight="SemiBold"
+                                                       Foreground="{ThemeResource SystemAccentColor}" />
+
+                                            <Button
+                                                x:Name="ChatCopyButton"
+                                                x:Uid="ChatCopyButton"
+                                                Grid.Column="1"
+                                                Content="Copy"
+                                                Tag="{Binding Content}"
+
+                                                Padding="8,2"
+                                                MinWidth="0"
+                                                MinHeight="0"
+                                                Style="{StaticResource SubtleButtonStyle}" />
+                                        </Grid>
+
+                                        <Grid ColumnSpacing="8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <ProgressRing Grid.Column="0" IsActive="{Binding IsThinking}"
+                                                          Visibility="{Binding IsThinking, Converter={StaticResource BoolToVisibilityConverter}}" Width="16"
+                                                          Height="16" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Text="{Binding Content}"
+                                                TextWrapping="Wrap"
+                                                IsTextSelectionEnabled="True"
+                                                VerticalAlignment="Center" />
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <!-- Welcome Screen Overlay -->
+                    <Grid Grid.Row="1"
+                          Visibility="{x:Bind local:ChatPage.GetWelcomeVisibility(ViewModel.IsNewChat), Mode=OneWay}"
+                          HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Spacing="24" HorizontalAlignment="Center">
+                            <TextBlock Text="What can I help you with today?"
+                                       Style="{StaticResource TitleTextBlockStyle}"
+                                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                       HorizontalAlignment="Center" />
+                            <ComboBox ItemsSource="{x:Bind ViewModel.AvailableProjects}"
+                                      SelectedItem="{Binding ViewModel.SelectedProjectForNewChat, Mode=TwoWay}"
+                                      Width="300"
+                                      HorizontalAlignment="Center"
+                                      PlaceholderText="Select Project" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Input Box -->
+                    <Grid Grid.Row="2" Margin="0,16,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            x:Name="ChatInputBox"
+                            x:Uid="ChatInputBox"
+                            Text="{Binding UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            PlaceholderText="Type a message or command (e.g. /triage d:\file.dll, /md5 ...)"
+                            VerticalAlignment="Center"
+                            Margin="0,0,12,0"
+                            AcceptsReturn="False" />
+
+                        <Button
+                            x:Name="ChatSendButton"
+                            x:Uid="ChatSendButton"
+                            Grid.Column="1"
+                            Content="Send"
+                            Command="{Binding SendMessageCommand}"
+                            Visibility="{x:Bind local:ChatPage.GetInverseVisibility(ViewModel.IsBusy), Mode=OneWay}"
+                            Style="{StaticResource AccentButtonStyle}"
+                            VerticalAlignment="Center"
+                            Padding="16,8" />
+
+                        <Button
+                            x:Name="ChatCancelButton"
+                            x:Uid="ChatCancelButton"
+                            Grid.Column="1"
+                            Content="Cancel"
+                            Command="{Binding CancelChatCommand}"
+                            Visibility="{x:Bind local:ChatPage.GetVisibility(ViewModel.IsBusy), Mode=OneWay}"
+                            Style="{StaticResource DefaultButtonStyle}"
+                            VerticalAlignment="Center"
+                            Padding="16,8" />
+                    </Grid>
+
+                    <!-- Copy Toast Feedback -->
+                    <Border
+                        x:Name="CopyToast"
+                        Grid.RowSpan="3"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Margin="0,12,0,0"
+                        Padding="14,8"
+                        CornerRadius="6"
+                        Background="{ThemeResource SystemAccentColor}"
+                        Opacity="0"
+                        IsHitTestVisible="False">
+                        <TextBlock x:Uid="ChatCopiedText" Text="Copied!" Foreground="White" FontWeight="SemiBold" />
+                    </Border>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+</Page>
